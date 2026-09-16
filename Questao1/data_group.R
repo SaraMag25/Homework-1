@@ -331,3 +331,21 @@ View(dados)
 # Resumo rápido
 print(head(dados))
 cat("\nTotal de observações:", nrow(dados), "\n")
+
+dados$total_user <- dados$casual + dados$registered
+df_10 <- head(dados, 10)
+calcula_moda <- function(v) {
+  frequencias <- table(v)
+  if(max(frequencias) == 1) {
+    return("Amodal (frequência máxima é 1)")
+  } else {
+    return(as.numeric(names(frequencias)[frequencias == max(frequencias)]))
+  }
+}
+
+cat("RESULTADOS DA QUESTÃO 1 (10 primeiras observações):\n")
+cat("1. Média:", mean(df_10$total_user), "\n")
+cat("2. Moda:", calcula_moda(df_10$total_user), "\n")
+cat("3. Mediana:", median(df_10$total_user), "\n")
+cat("4. Variância Amostral:", var(df_10$total_user), "\n")
+cat("5. Desvio Padrão Amostral:", sd(df_10$total_user), "\n")
