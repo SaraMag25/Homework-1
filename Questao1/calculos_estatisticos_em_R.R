@@ -306,9 +306,11 @@ dados <- read.csv(
   check.names = FALSE
 )
 
+# A primeira coluna do PDF funciona como numeração das linhas.
 rownames(dados) <- dados$row
 dados$row <- NULL
 
+# Garante os tipos corretos
 dados$dteday <- as.Date(dados$dteday)
 dados$instant <- as.integer(dados$instant)
 dados$season <- as.integer(dados$season)
@@ -317,20 +319,33 @@ dados$temp <- as.numeric(dados$temp)
 dados$casual <- as.integer(dados$casual)
 dados$registered <- as.integer(dados$registered)
 
+# Conferências rápidas
 stopifnot(nrow(dados) == 300)
 stopifnot(rownames(dados)[1] == "7")
 stopifnot(rownames(dados)[300] == "306")
 
+
+# Abre os dados no visualizador do RStudio (sem precisar instalar pacotes)
 View(dados)
 
+# Resumo rápido
 print(head(dados))
 cat("\nTotal de observações:", nrow(dados), "\n")
 
-library(openxlsx)
+dados$total_user <- dados$casual + dados$registered
+df_10 <- head(dados, 10)
+calcula_moda <- function(v) {
+  frequencias <- table(v)
+  if(max(frequencias) == 1) {
+    return("Amodal (frequência máxima é 1)")
+  } else {
+    return(as.numeric(names(frequencias)[frequencias == max(frequencias)]))
+  }
+}
 
-write.xlsx(
-  dados,
-  "data_group.xlsx",
-  rowNames = TRUE,
-  overwrite = TRUE
-)
+cat("RESULTADOS DA QUESTÃO 1 (10 primeiras observações):\n")
+cat("1. Média:", mean(df_10$total_user), "\n")
+cat("2. Moda:", calcula_moda(df_10$total_user), "\n")
+cat("3. Mediana:", median(df_10$total_user), "\n")
+cat("4. Variância Amostral:", var(df_10$total_user), "\n")
+cat("5. Desvio Padrão Amostral:", sd(df_10$total_user), "\n")
