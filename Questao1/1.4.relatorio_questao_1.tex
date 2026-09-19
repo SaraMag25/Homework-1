@@ -1,0 +1,541 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{float}
+\usepackage{longtable}
+
+\geometry{
+    left=3cm,
+    right=2cm,
+    top=3cm,
+    bottom=2cm
+}
+
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}.}
+
+\title{\textbf{Questão 1 -- Construção e Verificação do Conjunto de Dados\\
+Dados de Compartilhamento de Bicicletas}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+
+A Questão 1 tem como finalidade construir o conjunto de dados específico do grupo
+a partir da base original \texttt{HW1\_bike\_sharing.csv} e verificar,
+por meio de cálculos manuais e do ambiente R, os procedimentos estatísticos que
+serão utilizados nas etapas posteriores do trabalho.
+
+A base original contém 731 observações diárias referentes ao funcionamento de
+um sistema de compartilhamento de bicicletas em uma cidade dos Estados Unidos.
+Conforme definido no enunciado, cada grupo deve trabalhar com uma amostra
+específica de 300 observações consecutivas, determinada a partir do maior número
+de matrícula entre os integrantes.
+
+Para o grupo, o valor obtido para o índice inicial foi $r=7$. Portanto, a
+amostra utilizada é formada pelas observações de índice 7 até 306, totalizando
+exatamente 300 registros consecutivos e preservando a ordem original dos dados.
+
+A primeira observação da amostra corresponde ao dia 07 de janeiro de 2011,
+enquanto a última corresponde ao dia 02 de novembro de 2011.
+
+\section{Definição da amostra específica do grupo}
+
+O índice inicial da amostra é definido no enunciado por
+
+\begin{equation}
+r = 1 + (M \bmod 100),
+\end{equation}
+
+em que $M$ representa o maior número de matrícula entre os integrantes do grupo.
+
+A partir da definição da amostra utilizada no trabalho, obteve-se
+
+\begin{equation}
+r = 7.
+\end{equation}
+
+Assim, o resto da divisão do maior número de matrícula por 100 é igual a 6,
+pois
+
+\begin{equation}
+7 = 1 + (M \bmod 100)
+\end{equation}
+
+e, consequentemente,
+
+\begin{equation}
+M \bmod 100 = 6.
+\end{equation}
+
+A seleção foi realizada mantendo as observações em sua ordem original, sem
+exclusões ou reordenações. O intervalo utilizado pode ser resumido da seguinte
+forma:
+
+\begin{table}[H]
+\centering
+\caption{Identificação da amostra específica do grupo}
+\begin{tabular}{lc}
+\toprule
+\textbf{Informação} & \textbf{Resultado} \\
+\midrule
+Índice inicial $r$ & 7 \\
+Primeiro índice selecionado & 7 \\
+Último índice selecionado & 306 \\
+Número total de observações & 300 \\
+Primeira data & 07/01/2011 \\
+Última data & 02/11/2011 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Dessa maneira, o conjunto selecionado atende à exigência de utilizar 300
+observações consecutivas e constitui a base empregada nas análises subsequentes
+do homework.
+
+\section{Estruturação do conjunto de dados no R}
+
+O conjunto selecionado contém as variáveis \texttt{instant}, \texttt{dteday},
+\texttt{season}, \texttt{weathersit}, \texttt{temp}, \texttt{casual} e
+\texttt{registered}.
+
+No arquivo produzido pelo grupo, os dados são inicialmente organizados em uma
+estrutura tabular no R. Em seguida, a coluna utilizada apenas como identificação
+das linhas é transferida para os nomes das linhas e removida do corpo principal
+da tabela. Também são definidos explicitamente os tipos de cada variável,
+garantindo que datas, valores inteiros e valores numéricos sejam tratados de
+forma adequada.
+
+O código utilizado no arquivo do grupo é apresentado a seguir.
+
+\begin{verbatim}
+dados <- read.csv(
+  text = texto_dados,
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+
+rownames(dados) <- dados$row
+dados$row <- NULL
+
+dados$dteday <- as.Date(dados$dteday)
+dados$instant <- as.integer(dados$instant)
+dados$season <- as.integer(dados$season)
+dados$weathersit <- as.integer(dados$weathersit)
+dados$temp <- as.numeric(dados$temp)
+dados$casual <- as.integer(dados$casual)
+dados$registered <- as.integer(dados$registered)
+
+stopifnot(nrow(dados) == 300)
+stopifnot(rownames(dados)[1] == "7")
+stopifnot(rownames(dados)[300] == "306")
+
+View(dados)
+
+print(head(dados))
+cat("\nTotal de observações:", nrow(dados), "\n")
+
+library(openxlsx)
+
+write.xlsx(
+  dados,
+  "data_group.xlsx",
+  rowNames = TRUE,
+  overwrite = TRUE
+)
+\end{verbatim}
+
+As verificações realizadas com \texttt{stopifnot()} confirmam três condições
+fundamentais: o conjunto possui exatamente 300 observações, a primeira linha
+corresponde ao índice 7 e a última ao índice 306.
+
+Ao final, o pacote \texttt{openxlsx} é utilizado para exportar a tabela para o
+arquivo \texttt{data\_group.xlsx}, preservando os identificadores das linhas.
+
+\section{Primeiras 10 observações da amostra}
+
+Conforme solicitado no enunciado, os cálculos estatísticos foram realizados
+inicialmente de forma manual utilizando somente as 10 primeiras observações do
+conjunto selecionado.
+
+Para essa etapa, foi considerada a variável \texttt{total\_user}, definida pela
+soma do número de usuários casuais e registrados:
+
+\begin{equation}
+\text{total\_user}_i =
+\text{casual}_i + \text{registered}_i.
+\end{equation}
+
+Os valores utilizados nos cálculos são apresentados na Tabela 2.
+
+\begin{table}[H]
+\centering
+\caption{Primeiras 10 observações utilizadas nos cálculos manuais}
+\begin{tabular}{cccccc}
+\toprule
+\textbf{Obs.} &
+\textbf{instant} &
+\textbf{Data} &
+\textbf{casual} &
+\textbf{registered} &
+\textbf{total\_user} \\
+\midrule
+1  & 7  & 2011-01-07 & 148 & 1362 & 1510 \\
+2  & 8  & 2011-01-08 & 68  & 891  & 959  \\
+3  & 9  & 2011-01-09 & 54  & 768  & 822  \\
+4  & 10 & 2011-01-10 & 41  & 1280 & 1321 \\
+5  & 11 & 2011-01-11 & 43  & 1220 & 1263 \\
+6  & 12 & 2011-01-12 & 25  & 1137 & 1162 \\
+7  & 13 & 2011-01-13 & 38  & 1368 & 1406 \\
+8  & 14 & 2011-01-14 & 54  & 1367 & 1421 \\
+9  & 15 & 2011-01-15 & 222 & 1026 & 1248 \\
+10 & 16 & 2011-01-16 & 251 & 953  & 1204 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Esses 10 valores de \texttt{total\_user} foram utilizados para calcular média,
+mediana, moda, variância amostral, desvio padrão amostral, quartis e intervalo
+interquartil.
+
+\section{Cálculos manuais}
+
+\subsection{Média aritmética}
+
+A média aritmética é calculada pela soma de todos os valores observados dividida
+pelo número total de observações:
+
+\begin{equation}
+\bar{x} =
+\frac{\sum_{i=1}^{n} x_i}{n}.
+\end{equation}
+
+Para as 10 primeiras observações,
+
+\begin{equation}
+\bar{x} =
+\frac{
+1510 + 959 + 822 + 1321 + 1263 +
+1162 + 1406 + 1421 + 1248 + 1204
+}{10}.
+\end{equation}
+
+A soma dos valores é
+
+\begin{equation}
+\sum_{i=1}^{10}x_i = 12316.
+\end{equation}
+
+Portanto,
+
+\begin{equation}
+\bar{x} =
+\frac{12316}{10}
+=
+1231{,}6.
+\end{equation}
+
+Assim, a média do número total de usuários nas 10 primeiras observações é
+1231,6 usuários.
+
+\subsection{Mediana}
+
+Para determinar a mediana, os valores de \texttt{total\_user} são colocados em
+ordem crescente:
+
+\begin{center}
+822,\ 959,\ 1162,\ 1204,\ 1248,\ 1263,\ 1321,\ 1406,\ 1421,\ 1510.
+\end{center}
+
+Como existem 10 observações, o número de valores é par. Nesse caso, a mediana é
+obtida pela média aritmética dos dois valores centrais, localizados nas posições
+5 e 6:
+
+\begin{equation}
+Md =
+\frac{x_{(5)} + x_{(6)}}{2}.
+\end{equation}
+
+Substituindo os valores,
+
+\begin{equation}
+Md =
+\frac{1248 + 1263}{2}
+=
+\frac{2511}{2}
+=
+1255{,}5.
+\end{equation}
+
+Portanto, a mediana é igual a 1255,5 usuários.
+
+\subsection{Moda}
+
+A moda corresponde ao valor que apresenta a maior frequência de ocorrência.
+
+Nas 10 observações analisadas, todos os valores de \texttt{total\_user}
+aparecem apenas uma vez. Como não existe um valor com frequência superior aos
+demais, o conjunto é classificado como amodal.
+
+\subsection{Variância amostral}
+
+A variância amostral é calculada pela soma dos quadrados das diferenças entre
+cada observação e a média, dividida por $n-1$:
+
+\begin{equation}
+s^2 =
+\frac{
+\sum_{i=1}^{n}(x_i-\bar{x})^2
+}{n-1}.
+\end{equation}
+
+Utilizando $\bar{x}=1231{,}6$, obtêm-se os valores apresentados na Tabela 3.
+
+\begin{table}[H]
+\centering
+\caption{Cálculo das diferenças ao quadrado para a variância amostral}
+\begin{tabular}{rrrr}
+\toprule
+\textbf{Obs.} &
+\textbf{$x_i$} &
+\textbf{$x_i-\bar{x}$} &
+\textbf{$(x_i-\bar{x})^2$} \\
+\midrule
+1  & 1510 & 278,4  & 77506,56 \\
+2  & 959  & -272,6 & 74310,76 \\
+3  & 822  & -409,6 & 167772,16 \\
+4  & 1321 & 89,4   & 7992,36 \\
+5  & 1263 & 31,4   & 985,96 \\
+6  & 1162 & -69,6  & 4844,16 \\
+7  & 1406 & 174,4  & 30415,36 \\
+8  & 1421 & 189,4  & 35872,36 \\
+9  & 1248 & 16,4   & 268,96 \\
+10 & 1204 & -27,6  & 761,76 \\
+\midrule
+\textbf{Soma} & \textbf{12316} & \textbf{0} & \textbf{400730,40} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Logo,
+
+\begin{equation}
+s^2 =
+\frac{400730{,}40}{10-1}
+=
+\frac{400730{,}40}{9}
+=
+44525{,}60.
+\end{equation}
+
+A variância amostral encontrada é, portanto, 44525,60.
+
+\subsection{Desvio padrão amostral}
+
+O desvio padrão amostral é obtido pela raiz quadrada da variância:
+
+\begin{equation}
+s = \sqrt{s^2}.
+\end{equation}
+
+Substituindo o valor calculado,
+
+\begin{equation}
+s =
+\sqrt{44525{,}60}
+\approx
+211{,}01.
+\end{equation}
+
+Assim, o desvio padrão amostral das 10 primeiras observações é aproximadamente
+211,01 usuários.
+
+\subsection{Quartis e intervalo interquartil}
+
+No cálculo manual realizado pelo grupo, os quartis foram determinados por meio
+de interpolação utilizando posições baseadas em $(n+1)$.
+
+Para o primeiro quartil,
+
+\begin{equation}
+\text{posição de }Q_1 =
+\frac{n+1}{4}
+=
+\frac{11}{4}
+=
+2{,}75.
+\end{equation}
+
+A posição 2,75 encontra-se entre o segundo valor, 959, e o terceiro valor, 1162.
+Assim,
+
+\begin{equation}
+Q_1 =
+959 + 0{,}75(1162-959)
+=
+1111{,}25.
+\end{equation}
+
+O segundo quartil corresponde à mediana:
+
+\begin{equation}
+Q_2 = 1255{,}5.
+\end{equation}
+
+Para o terceiro quartil,
+
+\begin{equation}
+\text{posição de }Q_3 =
+\frac{3(n+1)}{4}
+=
+\frac{33}{4}
+=
+8{,}25.
+\end{equation}
+
+A posição 8,25 encontra-se entre o oitavo valor, 1406, e o nono valor, 1421:
+
+\begin{equation}
+Q_3 =
+1406 + 0{,}25(1421-1406)
+=
+1409{,}75.
+\end{equation}
+
+O intervalo interquartil é definido por
+
+\begin{equation}
+IQR = Q_3-Q_1.
+\end{equation}
+
+Portanto,
+
+\begin{equation}
+IQR =
+1409{,}75-1111{,}25
+=
+298{,}50.
+\end{equation}
+
+\section{Verificação dos cálculos no ambiente R}
+
+Após a realização manual, os cálculos foram verificados no ambiente R utilizando
+as mesmas 10 observações.
+
+O procedimento utilizado pelo grupo considera as funções \texttt{mean()},
+\texttt{median()}, \texttt{var()}, \texttt{sd()}, \texttt{quantile()} e
+\texttt{IQR()} para reproduzir computacionalmente as medidas calculadas.
+
+Os resultados obtidos no R foram:
+
+\begin{table}[H]
+\centering
+\caption{Resultados obtidos no R para as 10 primeiras observações}
+\begin{tabular}{lc}
+\toprule
+\textbf{Medida} & \textbf{Resultado} \\
+\midrule
+Média & 1231,60 \\
+Mediana & 1255,50 \\
+Variância amostral & 44525,60 \\
+Desvio padrão amostral & 211,0109 \\
+$Q_1$ & 1172,50 \\
+$Q_2$ & 1255,50 \\
+$Q_3$ & 1384,75 \\
+IQR & 212,25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Comparação entre os cálculos manuais e os resultados do R}
+
+A comparação entre os resultados permite verificar quais medidas coincidiram
+entre o procedimento manual e o procedimento computacional.
+
+\begin{table}[H]
+\centering
+\caption{Comparação entre os cálculos manuais e os resultados do R}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Estatística} &
+\textbf{Cálculo manual} &
+\textbf{R} &
+\textbf{Resultado} \\
+\midrule
+Média & 1231,60 & 1231,60 & Idêntico \\
+Mediana & 1255,50 & 1255,50 & Idêntico \\
+Variância amostral & 44525,60 & 44525,60 & Idêntico \\
+Desvio padrão amostral & 211,01 & 211,01 & Idêntico \\
+$Q_1$ & 1111,25 & 1172,50 & Diferente \\
+$Q_3$ & 1409,75 & 1384,75 & Diferente \\
+IQR & 298,50 & 212,25 & Diferente \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A média, a mediana, a variância amostral e o desvio padrão amostral apresentaram
+os mesmos resultados nos dois procedimentos. Dessa forma, os cálculos manuais
+dessas medidas foram confirmados pelas funções correspondentes do R.
+
+As diferenças foram observadas em $Q_1$, $Q_3$ e, consequentemente, no intervalo
+interquartil. Conforme registrado nos cálculos do grupo, essa divergência ocorre
+porque o procedimento manual e a função \texttt{quantile()} do R utilizam
+convenções diferentes para determinar percentis.
+
+No cálculo manual foi empregada uma posição baseada em $(n+1)$ e interpolação
+linear entre os valores adjacentes. Já a função \texttt{quantile()} do R utiliza,
+por padrão, o método denominado \texttt{type = 7}, que adota outra regra de
+interpolação.
+
+Por esse motivo, a diferença entre os quartis não representa um erro aritmético,
+mas uma consequência direta do método utilizado. Para as etapas seguintes do
+trabalho, foram adotados os valores calculados pelo R, mantendo um único padrão
+computacional para a análise das 300 observações.
+
+\section{Aplicação ao conjunto completo}
+
+Depois de verificar os procedimentos com as 10 primeiras observações, os mesmos
+métodos estatísticos foram estendidos ao conjunto completo de 300 registros.
+
+Essa etapa permite utilizar uma base previamente conferida nos itens seguintes
+do homework. O conjunto específico do grupo permanece formado pelas observações
+7 a 306, correspondentes ao período de 07/01/2011 a 02/11/2011.
+
+A verificação manual cumpre, portanto, a função de conferir os procedimentos
+estatísticos em uma amostra pequena e controlável antes da aplicação dos mesmos
+comandos ao conjunto completo.
+
+\section{Conclusão}
+
+A Questão 1 estabeleceu a base de dados específica que será utilizada nas
+demais etapas do trabalho. A partir do critério definido no enunciado, foi
+obtido $r=7$, resultando na seleção de 300 observações consecutivas, dos índices
+7 a 306, correspondentes ao período entre 07 de janeiro de 2011 e 02 de novembro
+de 2011.
+
+Nas 10 primeiras observações, a variável \texttt{total\_user} apresentou média
+igual a 1231,6 e mediana igual a 1255,5, enquanto a variância amostral foi
+44525,60 e o desvio padrão amostral aproximadamente 211,01. Esses resultados
+coincidiram com os valores calculados no R.
+
+Para os quartis, foram obtidos valores diferentes entre o cálculo manual e o R.
+O cálculo manual resultou em $Q_1=1111{,}25$, $Q_3=1409{,}75$ e
+$IQR=298{,}50$, enquanto o R retornou $Q_1=1172{,}50$,
+$Q_3=1384{,}75$ e $IQR=212{,}25$. A diferença decorre das distintas convenções
+de interpolação utilizadas para o cálculo dos percentis.
+
+Com a conferência dos procedimentos, o conjunto completo de 300 observações
+fica preparado para servir de base às análises estatísticas desenvolvidas nas
+questões seguintes.
+
+\end{document}
