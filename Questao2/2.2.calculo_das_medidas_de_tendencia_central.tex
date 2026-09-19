@@ -1,0 +1,724 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{float}
+
+\geometry{
+    left=3cm,
+    right=2cm,
+    top=3cm,
+    bottom=2cm
+}
+
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}.}
+
+\title{\textbf{Análise das Medidas de Tendência Central\\
+Dados de Aluguel de Bicicletas}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+
+Este relatório apresenta uma análise das medidas de tendência central das
+principais variáveis numéricas relacionadas ao aluguel de bicicletas em uma
+cidade dos Estados Unidos.
+
+As medidas analisadas são a média, a mediana e, quando aplicável, a moda.
+Essas medidas permitem resumir o comportamento dos dados por meio de valores
+representativos e ajudam a compreender características importantes da
+utilização do sistema de compartilhamento de bicicletas.
+
+O conjunto de dados analisado possui 300 observações.
+
+\section{Seleção das variáveis numéricas relevantes}
+
+Para a análise das medidas de tendência central, foram selecionadas as
+variáveis numéricas que possuem significado quantitativo no contexto do
+conjunto de dados.
+
+As variáveis consideradas relevantes são:
+
+\begin{itemize}
+
+    \item \textbf{temp}: representa a temperatura observada no período
+    correspondente a cada registro;
+
+    \item \textbf{casual}: representa a quantidade de usuários casuais,
+    isto é, usuários que utilizaram o serviço sem possuir registro
+    permanente no sistema;
+
+    \item \textbf{registered}: representa a quantidade de usuários
+    registrados que utilizaram o sistema;
+
+    \item \textbf{total\_user}: representa o número total de usuários do
+    serviço, obtido pela soma dos usuários casuais e registrados.
+
+\end{itemize}
+
+A variável \texttt{total\_user} é definida por:
+
+\begin{equation}
+\text{total\_user}_i =
+\text{casual}_i + \text{registered}_i
+\end{equation}
+
+em que $i$ representa cada observação do conjunto de dados.
+
+Essas variáveis foram escolhidas porque possuem interpretação quantitativa.
+A temperatura representa uma característica numérica das condições
+ambientais, enquanto as outras três variáveis representam diretamente a
+utilização do sistema de bicicletas.
+
+A variável \texttt{instant} não foi considerada nesta análise porque funciona
+como um identificador sequencial das observações. Apesar de ser armazenada
+como número, seus valores não representam uma quantidade de interesse.
+
+As variáveis \texttt{season} e \texttt{weathersit} também podem aparecer
+originalmente representadas por números, porém esses números correspondem a
+categorias. Dessa forma, calcular média ou mediana desses códigos não possui
+interpretação adequada.
+
+A variável \texttt{dteday}, por sua vez, representa uma data e, portanto,
+também não é utilizada diretamente nos cálculos de tendência central
+realizados neste relatório.
+
+\section{Medidas de tendência central}
+
+As medidas de tendência central utilizadas são média, mediana e moda.
+
+\subsection{Média aritmética}
+
+A média aritmética é obtida pela soma de todos os valores de uma variável,
+dividida pelo número total de observações.
+
+Sua fórmula geral é:
+
+\begin{equation}
+\bar{x} =
+\frac{\sum_{i=1}^{n} x_i}{n}
+\end{equation}
+
+em que:
+
+\begin{itemize}
+    \item $x_i$ representa cada observação;
+    \item $n$ representa o número total de observações;
+    \item $\bar{x}$ representa a média.
+\end{itemize}
+
+Neste conjunto de dados:
+
+\begin{equation}
+n = 300
+\end{equation}
+
+\subsubsection*{Média da temperatura}
+
+A soma de todos os valores da variável \texttt{temp} é:
+
+\begin{equation}
+\sum temp_i = 6344{,}1
+\end{equation}
+
+Aplicando a fórmula da média:
+
+\begin{equation}
+\overline{temp} =
+\frac{6344{,}1}{300}
+\end{equation}
+
+\begin{equation}
+\overline{temp} = 21{,}147
+\end{equation}
+
+Portanto, a temperatura média registrada no conjunto de dados é de
+aproximadamente:
+
+\begin{equation}
+\boxed{21{,}15}
+\end{equation}
+
+\subsubsection*{Média dos usuários casuais}
+
+A soma de todos os valores de usuários casuais é:
+
+\begin{equation}
+\sum casual_i = 223130
+\end{equation}
+
+Logo:
+
+\begin{equation}
+\overline{casual} =
+\frac{223130}{300}
+\end{equation}
+
+\begin{equation}
+\overline{casual} =
+743{,}7667
+\end{equation}
+
+Portanto:
+
+\begin{equation}
+\boxed{\overline{casual} \approx 743{,}77}
+\end{equation}
+
+Isso significa que foram observados, em média, aproximadamente 744 usuários
+casuais por registro.
+
+\subsubsection*{Média dos usuários registrados}
+
+A soma dos valores da variável \texttt{registered} é:
+
+\begin{equation}
+\sum registered_i = 830834
+\end{equation}
+
+Assim:
+
+\begin{equation}
+\overline{registered} =
+\frac{830834}{300}
+\end{equation}
+
+\begin{equation}
+\overline{registered} =
+2769{,}4467
+\end{equation}
+
+Portanto:
+
+\begin{equation}
+\boxed{\overline{registered} \approx 2769{,}45}
+\end{equation}
+
+Isso significa que o número médio de usuários registrados foi de
+aproximadamente 2769 usuários por observação.
+
+\subsubsection*{Média do total de usuários}
+
+A soma de todos os valores da variável \texttt{total\_user} é:
+
+\begin{equation}
+\sum total\_user_i = 1053964
+\end{equation}
+
+Aplicando a fórmula:
+
+\begin{equation}
+\overline{total\_user} =
+\frac{1053964}{300}
+\end{equation}
+
+\begin{equation}
+\overline{total\_user} =
+3513{,}2133
+\end{equation}
+
+Portanto:
+
+\begin{equation}
+\boxed{\overline{total\_user} \approx 3513{,}21}
+\end{equation}
+
+Em média, o sistema apresentou aproximadamente 3513 usuários por
+observação.
+
+Os resultados das médias são resumidos na Tabela a seguir.
+
+\begin{table}[H]
+\centering
+\caption{Média das variáveis numéricas analisadas}
+\begin{tabular}{lc}
+\toprule
+\textbf{Variável} & \textbf{Média} \\
+\midrule
+temp & 21,147 \\
+casual & 743,77 \\
+registered & 2769,45 \\
+total\_user & 3513,21 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Mediana}
+
+A mediana corresponde ao valor central de um conjunto de dados após os
+valores serem colocados em ordem crescente.
+
+Como o conjunto possui 300 observações, o número de observações é par.
+
+Nesse caso, a mediana é calculada usando os valores das posições:
+
+\begin{equation}
+\frac{n}{2}
+\end{equation}
+
+e
+
+\begin{equation}
+\frac{n}{2} + 1
+\end{equation}
+
+Como:
+
+\begin{equation}
+n = 300
+\end{equation}
+
+temos:
+
+\begin{equation}
+\frac{300}{2} = 150
+\end{equation}
+
+e:
+
+\begin{equation}
+150 + 1 = 151
+\end{equation}
+
+Assim, em todas as variáveis analisadas, a mediana é calculada pela média
+entre o 150º e o 151º valores da sequência ordenada.
+
+A fórmula utilizada é:
+
+\begin{equation}
+Md =
+\frac{x_{150} + x_{151}}{2}
+\end{equation}
+
+\subsubsection*{Mediana da temperatura}
+
+Após ordenar os valores de temperatura:
+
+\begin{equation}
+x_{150} = 22{,}2
+\end{equation}
+
+e:
+
+\begin{equation}
+x_{151} = 22{,}2
+\end{equation}
+
+Portanto:
+
+\begin{equation}
+Md_{temp} =
+\frac{22{,}2 + 22{,}2}{2}
+\end{equation}
+
+\begin{equation}
+Md_{temp} =
+\frac{44{,}4}{2}
+\end{equation}
+
+\begin{equation}
+\boxed{Md_{temp} = 22{,}2}
+\end{equation}
+
+\subsubsection*{Mediana dos usuários casuais}
+
+Os valores localizados nas posições 150 e 151 são:
+
+\begin{equation}
+x_{150} = 673
+\end{equation}
+
+\begin{equation}
+x_{151} = 673
+\end{equation}
+
+Assim:
+
+\begin{equation}
+Md_{casual} =
+\frac{673 + 673}{2}
+\end{equation}
+
+\begin{equation}
+Md_{casual} =
+\frac{1346}{2}
+\end{equation}
+
+\begin{equation}
+\boxed{Md_{casual} = 673}
+\end{equation}
+
+\subsubsection*{Mediana dos usuários registrados}
+
+Após ordenar os valores de \texttt{registered}, temos:
+
+\begin{equation}
+x_{150} = 3084
+\end{equation}
+
+e:
+
+\begin{equation}
+x_{151} = 3102
+\end{equation}
+
+Aplicando a fórmula:
+
+\begin{equation}
+Md_{registered} =
+\frac{3084 + 3102}{2}
+\end{equation}
+
+\begin{equation}
+Md_{registered} =
+\frac{6186}{2}
+\end{equation}
+
+\begin{equation}
+\boxed{Md_{registered} = 3093}
+\end{equation}
+
+\subsubsection*{Mediana do total de usuários}
+
+Para a variável \texttt{total\_user}, os dois valores centrais são:
+
+\begin{equation}
+x_{150} = 3982
+\end{equation}
+
+e:
+
+\begin{equation}
+x_{151} = 4010
+\end{equation}
+
+Logo:
+
+\begin{equation}
+Md_{total\_user} =
+\frac{3982 + 4010}{2}
+\end{equation}
+
+\begin{equation}
+Md_{total\_user} =
+\frac{7992}{2}
+\end{equation}
+
+\begin{equation}
+\boxed{Md_{total\_user} = 3996}
+\end{equation}
+
+Os valores das medianas são apresentados a seguir.
+
+\begin{table}[H]
+\centering
+\caption{Medianas das variáveis analisadas}
+\begin{tabular}{lc}
+\toprule
+\textbf{Variável} & \textbf{Mediana} \\
+\midrule
+temp & 22,2 \\
+casual & 673 \\
+registered & 3093 \\
+total\_user & 3996 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Moda}
+
+A moda corresponde ao valor que aparece com maior frequência em um conjunto
+de dados.
+
+Matematicamente, pode ser representada por:
+
+\begin{equation}
+Mo =
+\underset{x}{\operatorname{arg\,max}}\; f(x)
+\end{equation}
+
+em que $f(x)$ representa a frequência de ocorrência do valor $x$.
+
+Diferentemente da média e da mediana, uma variável pode possuir uma única
+moda ou várias modas.
+
+\subsubsection*{Moda da temperatura}
+
+Na variável \texttt{temp}, o valor:
+
+\begin{equation}
+26{,}0
+\end{equation}
+
+aparece 6 vezes no conjunto de dados.
+
+Nenhum outro valor possui frequência superior a 6.
+
+Portanto:
+
+\begin{equation}
+\boxed{Mo_{temp} = 26{,}0}
+\end{equation}
+
+\subsubsection*{Moda dos usuários casuais}
+
+Na variável \texttt{casual}, o valor:
+
+\begin{equation}
+639
+\end{equation}
+
+aparece 3 vezes.
+
+Essa é a maior frequência encontrada na variável.
+
+Portanto:
+
+\begin{equation}
+\boxed{Mo_{casual} = 639}
+\end{equation}
+
+\subsubsection*{Moda dos usuários registrados}
+
+Na variável \texttt{registered}, a maior frequência observada é igual a 2.
+
+Entretanto, diversos valores aparecem exatamente duas vezes:
+
+\begin{equation}
+\begin{split}
+Mo_{registered} = \{&
+674,\ 1368,\ 1506,\ 1628,\ 1707,\ 1730,\ 2419,\ 2549,\\
+&3107,\ 3348,\ 3413,\ 3840,\ 3848,\ 3854,\ 3896,\ 4044
+\}
+\end{split}
+\end{equation}
+
+Todos esses valores possuem a mesma frequência máxima de 2 ocorrências.
+
+Dessa forma, a distribuição é multimodal e não possui uma única moda.
+
+\subsubsection*{Moda do total de usuários}
+
+Para a variável \texttt{total\_user}, a frequência máxima encontrada também
+é igual a 2.
+
+Os valores com essa frequência são:
+
+\begin{equation}
+\begin{split}
+Mo_{total\_user} = \{&
+1685,\ 2077,\ 3351,\ 4274,\ 4401,\\
+&4758,\ 5119,\ 5202,\ 5312
+\}
+\end{split}
+\end{equation}
+
+Portanto, a variável \texttt{total\_user} também possui comportamento
+multimodal.
+
+Os resultados das modas são resumidos na tabela a seguir.
+
+\begin{table}[H]
+\centering
+\caption{Modas das variáveis analisadas}
+\begin{tabular}{p{3cm}p{10cm}}
+\toprule
+\textbf{Variável} & \textbf{Moda} \\
+\midrule
+temp & 26,0, com frequência 6 \\
+casual & 639, com frequência 3 \\
+registered & 674, 1368, 1506, 1628, 1707, 1730, 2419, 2549,
+3107, 3348, 3413, 3840, 3848, 3854, 3896 e 4044, todos com frequência 2 \\
+total\_user & 1685, 2077, 3351, 4274, 4401, 4758, 5119, 5202 e 5312,
+todos com frequência 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Resumo das medidas de tendência central}
+
+Os resultados gerais são apresentados na tabela abaixo.
+
+\begin{table}[H]
+\centering
+\caption{Resumo das medidas de tendência central}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Variável} &
+\textbf{Média} &
+\textbf{Mediana} &
+\textbf{Moda} \\
+\midrule
+temp & 21,15 & 22,2 & 26,0 \\
+casual & 743,77 & 673 & 639 \\
+registered & 2769,45 & 3093 & Multimodal \\
+total\_user & 3513,21 & 3996 & Multimodal \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Interpretação dos resultados}
+
+\subsection{Temperatura}
+
+A temperatura média observada foi de aproximadamente 21,15, enquanto a
+mediana foi de 22,2.
+
+Isso significa que o centro da distribuição das temperaturas está próximo
+de 22. A mediana indica que metade das observações apresenta temperatura
+inferior ou igual a aproximadamente 22,2 e a outra metade apresenta valores
+superiores ou iguais a esse valor.
+
+A moda foi 26,0, que apareceu 6 vezes, sendo a temperatura individual mais
+frequente no conjunto de dados.
+
+Como a média é ligeiramente inferior à mediana, existem observações de
+temperaturas mais baixas que contribuem para reduzir o valor médio.
+
+\subsection{Usuários casuais}
+
+A média de usuários casuais foi de aproximadamente 743,77 usuários, enquanto
+a mediana foi de 673 usuários.
+
+A média maior que a mediana indica que existem observações com números
+relativamente elevados de usuários casuais que aumentam o valor médio.
+
+A moda foi 639 usuários, com três ocorrências.
+
+Isso mostra que, apesar de a média ser aproximadamente 744 usuários, um dos
+valores mais representativos da região central do conjunto encontra-se em
+torno de 639 a 673 usuários.
+
+\subsection{Usuários registrados}
+
+A média de usuários registrados foi de aproximadamente 2769,45, enquanto a
+mediana foi de 3093.
+
+Neste caso, a mediana é maior que a média. Isso indica que existem
+observações com números relativamente baixos de usuários registrados que
+reduzem o valor da média.
+
+A diferença também mostra que a distribuição dos usuários registrados não é
+perfeitamente simétrica.
+
+A variável não possui uma única moda. Existem 16 valores diferentes que
+aparecem duas vezes cada, que é a maior frequência observada.
+
+Portanto, a moda possui pouca capacidade de representar um único valor
+típico para essa variável.
+
+\subsection{Total de usuários}
+
+A média do total de usuários foi de aproximadamente 3513,21 usuários.
+
+A mediana foi igual a 3996.
+
+Isso significa que, após ordenar os 300 valores, o centro do conjunto está
+próximo de 3996 usuários.
+
+A mediana maior que a média indica que algumas observações com quantidades
+relativamente baixas de usuários reduzem o valor médio do conjunto.
+
+No contexto do sistema de aluguel de bicicletas, isso sugere que existem
+períodos com baixa utilização do serviço, enquanto uma parcela significativa
+das observações apresenta utilização superior à média geral.
+
+A variável \texttt{total\_user} também é multimodal. Nove valores diferentes
+aparecem duas vezes cada, e nenhuma quantidade aparece mais frequentemente
+do que isso.
+
+Por esse motivo, neste caso, a média e principalmente a mediana são mais
+informativas para representar o comportamento central da utilização total
+do serviço do que uma única moda.
+
+\subsection{Comparação entre usuários casuais e registrados}
+
+Os resultados mostram uma diferença importante entre os dois tipos de
+usuários.
+
+A média de usuários casuais foi:
+
+\begin{equation}
+743{,}77
+\end{equation}
+
+enquanto a média de usuários registrados foi:
+
+\begin{equation}
+2769{,}45
+\end{equation}
+
+A diferença entre essas médias é:
+
+\begin{equation}
+2769{,}45 - 743{,}77 = 2025{,}68
+\end{equation}
+
+Portanto, em média, existem aproximadamente 2026 usuários registrados a mais
+que usuários casuais por observação.
+
+Também é possível comparar a participação média de cada grupo em relação ao
+total médio de usuários.
+
+Para os usuários casuais:
+
+\begin{equation}
+\frac{743{,}77}{3513{,}21} \times 100
+\approx 21{,}17\%
+\end{equation}
+
+Para os usuários registrados:
+
+\begin{equation}
+\frac{2769{,}45}{3513{,}21} \times 100
+\approx 78{,}83\%
+\end{equation}
+
+Dessa forma, considerando os valores médios, aproximadamente 78,83\% dos
+usuários são registrados e 21,17\% são usuários casuais.
+
+Isso mostra que a utilização do sistema de aluguel de bicicletas é composta
+majoritariamente por usuários registrados no período representado pelos
+dados analisados.
+
+\section{Considerações finais}
+
+A análise das medidas de tendência central permitiu resumir o comportamento
+das principais variáveis numéricas do conjunto de dados.
+
+A temperatura apresentou média de 21,15, mediana de 22,2 e moda de 26,0.
+
+A quantidade de usuários casuais apresentou média de 743,77, mediana de 673
+e moda de 639.
+
+Para os usuários registrados, a média foi de 2769,45 e a mediana de 3093.
+A variável apresentou várias modas com frequência igual a 2.
+
+O total de usuários apresentou média de 3513,21 e mediana de 3996, também
+apresentando diversas modas.
+
+Os resultados demonstram que os usuários registrados representam a maior
+parcela da utilização do serviço, correspondendo a aproximadamente 78,83\%
+do número médio total de usuários.
+
+Além disso, as diferenças observadas entre média e mediana indicam que as
+distribuições não são perfeitamente simétricas. Em especial, a mediana do
+total de usuários é superior à média, indicando a presença de observações
+com baixa utilização que reduzem o valor médio.
+
+Essas medidas fornecem uma visão inicial do comportamento do sistema de
+aluguel de bicicletas e podem servir de base para análises posteriores que
+relacionem a demanda a fatores como temperatura, estação do ano, condições
+meteorológicas e período de observação.
+
+\end{document}
