@@ -1,0 +1,50 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+
+\begin{document}
+
+\section*{2.3. Análise de Quartis e Identificação de Valores Atípicos}
+
+\subsection*{Justificação da Escolha da Variável}
+Para esta análise, optou-se pela variável \texttt{total\_user}, que representa a soma diária de ciclistas casuais e registados. A escolha justifica-se por esta variável refletir a procura agregada e real do sistema de bicicletas partilhadas num dado dia. Analisar o volume total é a métrica mais indicada para identificar dias de sobrecarga extrema ou de ociosidade anómala do sistema.
+
+\subsection*{Metodologia e Resultados em R}
+De acordo com os requisitos estabelecidos, os dados da amostra de 300 observações foram primeiramente organizados em ordem crescente. Para a identificação de potenciais valores atípicos (outliers), utilizou-se o método clássico do Intervalo Interquartil (IQR), definido pela diferença entre o terceiro quartil ($Q_3$) e o primeiro quartil ($Q_1$). 
+
+Os limites de deteção foram calculados com base nas seguintes fórmulas matemáticas:
+\begin{itemize}
+    \item \textbf{Limite Inferior (Lower):} $Q_1 - 1,5 \cdot IQR$
+    \item \textbf{Limite Superior (Upper):} $Q_3 + 1,5 \cdot IQR$
+\end{itemize}
+
+A Figura \ref{fig:print_r_q2} apresenta a captura de ecrã do terminal com a execução do guião em linguagem R, evidenciando as medidas obtidas computacionalmente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{print_q2.png}
+    \caption{Resultados do cálculo de quartis e limites executados em R.}
+    \label{fig:print_r_q2}
+\end{figure}
+
+A partir do processamento computacional, extraíram-se os seguintes indicadores estatísticos para a amostra:
+\begin{itemize}
+    \item $Q_1$ (25\%): 2105,5
+    \item $Q_2$ (Mediana / 50\%): 3996
+    \item $Q_3$ (75\%): 4681
+    \item IQR (Intervalo Interquartil): 2575,5
+    \item Limite Inferior: -1757,75
+    \item Limite Superior: 8544,25
+\end{itemize}
+
+\subsection*{Quantificação e Discussão de Valores Atípicos}
+Com base no critério do intervalo interquartil, qualquer observação cuja soma total de utilizadores fosse inferior a -1757,75 ou superior a 8544,25 seria classificada como um valor atípico.
+
+Ao analisar as 300 observações da amostra do grupo, \textbf{quantifica-se em 0 (zero) o número de observações classificadas como potenciais valores atípicos}. Como a contagem de alugueres não pode assumir valores negativos, o limite inferior calculado não tem aplicação prática. Por outro lado, o valor máximo absoluto registado nesta amostra específica não ultrapassou o teto estatístico de 8544,25 utilizadores. Consequentemente, não existem datas a identificar.
+
+\textbf{Relevância para a análise do sistema:}
+A inexistência de valores atípicos nesta janela de 300 dias revela que o comportamento da procura se manteve dentro das margens esperadas de flutuação. Isto indica uma forte previsibilidade no uso do sistema, demonstrando que, durante este período, não ocorreram eventos extremos — como intempéries severas que paralisassem a cidade ou grandes eventos de massa não planeados. Para a gestão operacional, esta estabilidade é um indicador de que o dimensionamento da frota está adequado à variância natural do quotidiano da cidade.
+
+\end{document}
