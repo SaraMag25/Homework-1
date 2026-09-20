@@ -1,0 +1,66 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{caption}
+
+\begin{document}
+
+\section*{3.4. Impacto das Condições Meteorológicas na Utilização}
+
+\subsection*{Metodologia e Resultados Estatísticos}
+Para esta secção, os dados foram agrupados com base na variável qualitativa que representa o clima (\texttt{weathersit}). A partir deste agrupamento, procedeu-se ao cálculo da média e do desvio padrão do número total de utilizadores (\texttt{total\_user}) para cada condição. Adicionalmente, quantificou-se a proporção de dias classificados como de baixa utilização (\textit{low usage}), adotando como critério analítico os dias em que o total de alugueres foi inferior ao primeiro quartil ($Q_1$) da amostra.
+
+Os indicadores estatísticos obtidos a partir do processamento computacional em R estão sintetizados na Tabela \ref{tab:estatisticas_clima}.
+
+\begin{table}[H]
+    \centering
+    \caption{Estatísticas de utilização por condição meteorológica.}
+    \vspace{0.1cm}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{l c c c c c}
+        \toprule
+        \textbf{Condição Meteorológica} & \textbf{Média} & \textbf{Desvio Padrão} & \textbf{Total Dias} & \textbf{Dias Low Usage} & \textbf{Proporção} \\ 
+        \midrule
+        Céu limpo & 3851.0 & 1360.0 & 184 & 33 & 17,9\% \\ 
+        Nublado & 3110.0 & 1328.0 & 106 & 35 & 33,0\% \\ 
+        Chuva fraca & 1562.0 & 852.0 & 10 & 7 & 70,0\% \\ 
+        \bottomrule
+    \end{tabular}
+    }
+    \\ \vspace{0.1cm}
+    \footnotesize{Fonte: Elaborado pelos autores (2026) com base nos dados de \texttt{2.1.total\_user.xlsx}.}
+    \label{tab:estatisticas_clima}
+\end{table}
+
+\subsection*{Análise Visual e Discussão do Impacto Climático}
+A análise da dispersão dos dados é apoiada pela Figura \ref{fig:boxplot_clima}, que ilustra o comportamento da procura através de um \textit{boxplot}, e pela Figura \ref{fig:proporcao_clima}, que isola a taxa de dias de baixa utilização.
+
+\begin{figure}[H]
+    \centering
+    \caption{Distribuição de utilizadores por condição meteorológica.}
+    \vspace{0.1cm}
+    \includegraphics[width=0.8\textwidth]{boxplot_clima.png}
+    \\ \vspace{0.1cm}
+    \footnotesize{Fonte: Elaborado pelos autores (2026) com base nos dados de \texttt{2.1.total\_user.xlsx}.}
+    \label{fig:boxplot_clima}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Proporção de dias de baixa utilização (\textit{low usage}) por clima.}
+    \vspace{0.1cm}
+    \includegraphics[width=0.8\textwidth]{proporcao_low_usage.png}
+    \\ \vspace{0.1cm}
+    \footnotesize{Fonte: Elaborado pelos autores (2026) com base nos dados de \texttt{2.1.total\_user.xlsx}.}
+    \label{fig:proporcao_clima}
+\end{figure}
+
+A partir da observação dos resultados, constata-se uma relação direta e inversamente proporcional entre a severidade do clima e a adesão ao sistema de bicicletas.
+
+\textbf{Relevância para a análise do sistema:}
+Os dias de \textbf{Céu limpo} apresentam o pico absoluto de utilização (média de 3851 utilizadores), evidenciando que condições meteorológicas favoráveis são o principal motor da procura, com apenas 17,9\% desses dias a registarem baixa adesão. O clima \textbf{Nublado} gera um impacto negativo moderado, aumentando a proporção de dias de fraca adesão para 33\%. Em contraste drástico, a \textbf{Chuva fraca afasta significativamente os utilizadores}, reduzindo a média diária para menos de metade (1562) e forçando o sistema a operar em níveis de \textit{low usage} em \textbf{70\% das ocorrências}. Para a gestão operacional, esta sensibilidade climática extrema sugere que a redistribuição da frota e as rotinas de manutenção corretiva devem ser estrategicamente planeadas para dias com previsão de precipitação, otimizando os períodos de ociosidade forçada do sistema.
+
+\end{document}
