@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath} %USAR ESSA BIBLIOTECAA!!!!
+
+\section{Definição da Amostra}
+
+Para a definição do conjunto de observações a ser utilizado nas análises
+estatísticas subsequentes, considera-se o maior número de matrícula entre
+os integrantes do grupo. Os números de matrícula são apresentados na
+Tabela~\ref{tab:matriculas}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lc}
+        \hline
+        \textbf{Integrante} & \textbf{Matrícula} \\
+        \hline
+        Allan Martins Gadelha & 579087 \\
+        Clarisse Maria Cabral Montenegro & 580585 \\
+        Maria Luisa Fernandes de Mendonça & 581706 \\
+        Sara de Sousa Magalhães & 581189 \\
+        \hline
+    \end{tabular}
+    \caption{Números de matrícula dos integrantes do grupo.}
+    \label{tab:matriculas}
+\end{table}
+
+A maior matrícula entre os integrantes é:
+
+\[
+M = 581706.
+\]
+
+Conforme a definição estabelecida, calcula-se o valor de
+$r$ por meio da expressão:
+
+\[
+r = 1 + (M\mod 100).
+\]
+
+O operador $\mod$ representa o resto da divisão inteira de $M$ por 100.
+
+Calculando o resto da divisão de $M$ por 100, obtém-se:
+
+\[
+581706 \text{ mod } 100 = 6.
+\]
+
+Logo,
+
+\[
+r = 1 + 6 = \boxed{7}.
+\]
+
+Portanto, a seleção das observações deve ser iniciada na observação de
+número 7. Considerando a necessidade de selecionar 300 observações
+consecutivas, a última observação selecionada é determinada por:
+
+\[
+r + 300 - 1 = 7 + 300 - 1 = 306.
+\]
+
+Dessa forma, a amostra utilizada nas análises estatísticas subsequentes
+é composta pelas 300 observações compreendidas entre as observações 7 e
+306, inclusive:
+
+\[
+\boxed{\{7,8,9,\ldots,306\}}.
+\]
+

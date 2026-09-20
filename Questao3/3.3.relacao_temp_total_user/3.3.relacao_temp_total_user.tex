@@ -1,0 +1,79 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{geometry}
+
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=3cm,
+    right=3cm
+}
+
+\begin{document}
+
+\subsection*{3. Relação entre temperatura e \texttt{total\_user}}
+
+\textbf{Investigue a relação entre a temperatura e \texttt{total\_user}. Construa um gráfico de dispersão e calcule o coeficiente de correlação. Interprete a direção e a intensidade da associação e discuta possíveis limitações do coeficiente de correlação para descrever a relação observada.}
+
+Para investigar a relação entre a temperatura e o número total de usuários, foi construído um gráfico de dispersão utilizando as variáveis \texttt{temp} e \texttt{total\_user}. Cada ponto do gráfico representa uma observação do conjunto de dados, isto é, um dia.
+
+A variável \texttt{temp} foi representada no eixo horizontal, enquanto \texttt{total\_user} foi representada no eixo vertical.
+
+O gráfico obtido é apresentado a seguir:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{3.1.grafico_temp_total_user.png}
+\end{figure}
+
+Visualmente, observa-se uma tendência crescente na distribuição dos pontos. De modo geral, à medida que a temperatura aumenta, também ocorre um aumento no número total de usuários.
+
+Para quantificar a intensidade e a direção dessa relação, foi calculado o coeficiente de correlação de Pearson, dado por:
+
+\[
+r =
+\frac{
+\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})
+}{
+\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2}
+\sqrt{\sum_{i=1}^{n}(y_i-\bar{y})^2}
+}
+\]
+
+em que $x_i$ representa os valores da temperatura e $y_i$ representa os valores de \texttt{total\_user}.
+
+O valor obtido foi:
+
+\[
+r = 0{,}805772815784835
+\]
+
+Para facilitar a interpretação:
+
+\[
+r \approx 0{,}806
+\]
+
+Como o coeficiente de correlação é positivo, conclui-se que existe uma associação positiva entre as duas variáveis. Isso significa que temperaturas mais elevadas tendem a estar associadas a maiores valores de \texttt{total\_user}.
+
+Além disso, como o valor de $r$ é relativamente próximo de 1, a associação linear observada pode ser considerada forte.
+
+Portanto, para o conjunto de dados analisado, os resultados indicam uma \textbf{associação linear positiva forte entre temperatura e número total de usuários}.
+
+Entretanto, o coeficiente de correlação apresenta algumas limitações importantes. Em primeiro lugar, a correlação mede principalmente o grau de associação linear entre duas variáveis. Dessa forma, relações não lineares podem não ser adequadamente representadas por um único coeficiente.
+
+Além disso, o coeficiente de correlação não estabelece uma relação de causalidade. Assim, mesmo que temperaturas mais altas estejam associadas a maiores valores de \texttt{total\_user}, não é possível concluir apenas com esse resultado que o aumento da temperatura seja responsável pelo aumento no número de usuários.
+
+Também é possível observar no gráfico alguns pontos que se afastam da tendência predominante. Esses valores podem influenciar o coeficiente de correlação e mostram que a temperatura não explica isoladamente toda a variação observada em \texttt{total\_user}.
+
+Outras características presentes no conjunto de dados, como estação do ano e condições climáticas, também podem estar relacionadas à quantidade de usuários e contribuir para o comportamento observado.
+
+Dessa forma, embora o coeficiente de Pearson indique uma associação linear positiva forte entre temperatura e \texttt{total\_user}, ele deve ser interpretado em conjunto com o gráfico de dispersão e com as demais características do conjunto de dados.
+
+\end{document}

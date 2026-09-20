@@ -1,0 +1,65 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{float}
+
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+\section*{Questão 2.4}
+
+Para analisar a variável \texttt{total\_user} (número total de usuários por dia, soma de usuários casuais e registrados) na amostra de $n = 300$ observações, foram construídos um histograma de densidade e um boxplot, apresentados na Figura 1 e na Figura 2.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{histogramaq2.png}
+    \caption{Histograma de densidade da variável total\_user.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{boxplotq2.png}
+    \caption{Boxplot da variável total\_user.}
+\end{figure}
+
+\subsection*{Forma da distribuição}
+
+O histograma da Figura 1 mostra uma distribuição de forma bimodal, com dois picos de concentração de dados: um primeiro pico na faixa de 1500 a 2000 usuários e um segundo pico, de maior frequência, na faixa de 4500 a 5000 usuários. Essa bimodalidade sugere a existência de dois regimes distintos de uso do sistema, possivelmente relacionados a fatores sazonais ou ao padrão de dias úteis em comparação com finais de semana e feriados. Essa característica não é perceptível no boxplot da Figura 2, já que esse gráfico resume a distribuição apenas por quartis, sem indicar múltiplos picos de concentração.
+
+\subsection*{Dispersão}
+
+No histograma, os dados variam de valores próximos de zero até pouco mais de 6000 usuários, indicando ampla dispersão. O boxplot detalha essa dispersão por meio dos quartis calculados anteriormente: $Q_1 = 2105{,}5$, mediana $= 3996$ e $Q_3 = 4681$. O intervalo interquartil é dado por
+
+\[
+\text{IQR} = Q_3 - Q_1 = 4681 - 2105{,}5 = 2575{,}5.
+\]
+
+Esse valor de IQR, somado à amplitude total observada no histograma, confirma a alta dispersão da variável. Nesse aspecto, o boxplot é mais preciso, pois fornece diretamente os valores numéricos de Q1, mediana e Q3, enquanto o histograma apenas sugere a dispersão de forma visual.
+
+\subsection*{Assimetria}
+
+No boxplot, a mediana (3996) está posicionada mais próxima de Q3 (4681) do que de Q1 (2105,5), o que indica uma leve assimetria à esquerda, com a cauda inferior da distribuição mais alongada em direção aos valores baixos. Essa observação é reforçada pelo histograma, no qual o pico de maior densidade se concentra na faixa mais alta (4500 a 5000), enquanto o pico secundário, de menor densidade, ocupa uma faixa mais baixa (1500 a 2000), com valores se estendendo até próximo de zero. O boxplot evidencia a assimetria de forma resumida, pela posição da mediana entre os quartis, enquanto o histograma mostra a origem dessa assimetria, isto é, onde as massas de dados de fato se concentram.
+
+\subsection*{Valores atípicos}
+
+Os limites para identificação de outliers, calculados a partir do critério de 1,5 IQR, são:
+
+\[
+\text{Limite inferior} = -1757{,}75 \qquad \text{Limite superior} = 8544{,}25.
+\]
+
+Como o valor mínimo observado é próximo de zero e o valor máximo é pouco superior a 6000, todos os dados da amostra estão dentro desse intervalo, o que confirma a ausência de valores atípicos, resultado também obtido no cálculo anterior (0 valores atípicos). O boxplot da Figura 2 evidencia essa conclusão de forma direta, já que não apresenta nenhum ponto isolado além das hastes. O histograma, por sua vez, não define formalmente limites para outliers, permitindo apenas observar visualmente que não há valores isolados nas extremidades da distribuição.
+
+\subsection*{Relação entre os gráficos e as medidas estatísticas}
+
+De modo geral, o histograma é mais indicado para identificar a forma da distribuição, no caso a bimodalidade, e para visualizar como a densidade dos dados se distribui ao longo de toda a amplitude da variável. Já o boxplot é mais indicado para quantificar a dispersão por meio do IQR e da amplitude, identificar a assimetria pela posição da mediana em relação aos quartis, e detectar formalmente a presença de outliers.
+
+Conclui-se que os dois gráficos são complementares: o histograma capta padrões de forma, que não é perceptível no boxplot, enquanto o boxplot resume numericamente a dispersão, a assimetria e a existência de valores atípicos com base nas medidas estatísticas calculadas.
+
+\end{document}
