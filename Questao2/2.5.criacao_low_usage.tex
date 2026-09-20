@@ -1,0 +1,112 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage{geometry}
+
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=3cm,
+    right=3cm
+}
+
+\begin{document}
+
+\subsection*{2.5. Criação da variável \texttt{low\_usage}}
+
+\textbf{Com base nos quartis calculados anteriormente, utilize o primeiro quartil $Q_1$ como critério para classificar um dia como de ``baixa utilização'' do sistema. A partir desse critério, crie a variável binária \texttt{low\_usage}, determine o número e a proporção de dias classificados como de baixa utilização e explique o significado desse critério no contexto dos dados.}
+
+Para realizar a classificação dos dias de acordo com o nível de utilização do sistema, foi utilizado como ponto de corte o primeiro quartil da variável \texttt{total\_user}.
+
+O primeiro quartil, representado por $Q_1$, corresponde ao valor abaixo do qual se encontra aproximadamente 25\% das observações da distribuição. A partir dos dados analisados, obteve-se:
+
+\[
+Q_1 = 2105{,}5
+\]
+
+Dessa forma, foi adotado o seguinte critério para a construção da variável binária \texttt{low\_usage}:
+
+\[
+\texttt{low\_usage} =
+\begin{cases}
+1, & \text{se } \texttt{total\_user} < 2105{,}5,\\
+0, & \text{caso contrário}.
+\end{cases}
+\]
+
+Portanto, os dias em que o número total de usuários foi inferior a $2105{,}5$ foram classificados como dias de baixa utilização do sistema.
+
+Como a variável \texttt{total\_user} representa uma contagem de usuários e assume valores inteiros, a condição
+
+\[
+\texttt{total\_user} < 2105{,}5
+\]
+
+equivale, na prática, a:
+
+\[
+\texttt{total\_user} \leq 2105.
+\]
+
+A variável \texttt{low\_usage} foi criada em R utilizando a seguinte expressão:
+
+\begin{verbatim}
+dados$low_usage <- ifelse(
+  dados$total_user < Q1,
+  1,
+  0
+)
+\end{verbatim}
+
+Após a aplicação desse critério às 300 observações presentes no conjunto de dados, foram encontrados:
+
+\[
+n_{\text{low\_usage}} = 75
+\]
+
+dias classificados como de baixa utilização.
+
+A proporção desses dias em relação ao total de observações foi calculada por:
+
+\[
+p =
+\frac{n_{\text{low\_usage}}}{n}
+\]
+
+Substituindo os valores encontrados:
+
+\[
+p =
+\frac{75}{300}
+\]
+
+\[
+p = 0{,}25
+\]
+
+Convertendo essa proporção para porcentagem:
+
+\[
+0{,}25 \times 100 = 25\%
+\]
+
+Assim, \textbf{75 dos 300 dias analisados foram classificados como dias de baixa utilização}, correspondendo a \textbf{25\% das observações}.
+
+Esse resultado é coerente com a utilização do primeiro quartil como ponto de corte, uma vez que $Q_1$ delimita aproximadamente os 25\% menores valores da distribuição.
+
+Nesse contexto, a variável \texttt{low\_usage} permite identificar de maneira objetiva os dias nos quais o sistema apresentou níveis relativamente baixos de utilização em comparação com o restante do período analisado.
+
+Dessa forma, a interpretação da nova variável é:
+
+\begin{itemize}
+    \item \texttt{low\_usage = 1}: o dia apresentou baixa utilização, isto é, o valor de \texttt{total\_user} foi inferior a $2105{,}5$;
+    
+    \item \texttt{low\_usage = 0}: o dia não foi classificado como de baixa utilização, pois seu valor de \texttt{total\_user} foi igual ou superior a $2105{,}5$.
+\end{itemize}
+
+A nova variável foi acrescentada ao conjunto de dados original, preservando as demais variáveis existentes e permitindo que essa classificação seja utilizada nas análises posteriores.
+
+\end{document}
