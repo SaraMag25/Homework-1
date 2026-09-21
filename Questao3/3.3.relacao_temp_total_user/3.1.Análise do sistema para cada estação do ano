@@ -1,0 +1,52 @@
+library(readxl)
+library(dplyr)
+library(ggplot2)
+
+dados <- read_excel("2.1.total_user.xlsx")
+
+quartis <- quantile(
+  sort(dados$total_user),
+  probs = c(0.25, 0.50, 0.75),
+  type = 7
+)
+print(quartis)
+
+Q1 <- quartis[[1]]
+dados <- dados %>%
+  mutate(low_usage = total_user <= Q1)
+
+print(table(dados$low_usage))
+
+resumo_estacoes <- dados %>%
+  group_by(season) %>%
+  summarise(
+    n = n(),
+    media = mean(total_user),
+    mediana = median(total_user),
+    desvio_padrao = sd(total_user),
+    dias_low_usage = sum(low_usage),
+    proporcao = mean(low_usage),
+    .groups = "drop"
+  )
+
+print(resumo_estacoes)
+
+grafico <- ggplot(
+  dados,
+  aes(x = factor(season,
+                 levels = c("Inverno", "Primavera", "Verão", "Outono")),
+      y = total_user,
+      fill = season)
+) +
+  geom_boxplot(width = 0.65, alpha = 0.80) +
+  geom_hline(yintercept = Q1, linetype = "dashed", colour = "gray35") +
+  labs(
+    title = "Distribuição do total de usuários por estação",
+    x = "Estação do ano",
+    y = "Total diário de usuários"
+  ) +
+  guides(fill = "none") +
+  theme_minimal(base_size = 12)
+
+print(grafico)
+ggsave("boxplot_estacoes.png", grafico, width = 8.2, height = 5.1, dpi = 300)
