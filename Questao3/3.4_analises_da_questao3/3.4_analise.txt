@@ -1,0 +1,17 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+\begin{document}
+
+\subsection*{3.4. Características mais associadas à utilização do sistema}
+
+Os resultados indicam que a temperatura e a estação do ano são as duas características mais fortemente associadas à utilização do sistema de bicicletas. 
+
+A influência da temperatura é evidenciada pelo coeficiente de correlação de Pearson calculado em aproximadamente 0,806. Este valor indica uma associação linear positiva e forte, demonstrando que o aumento da temperatura tende a estar associado a um maior número total de usuários diários, conforme ilustrado no gráfico de dispersão apresentado na análise da Seção 3.3. 
+
+Além disso, a análise das estações do ano revelou uma variação expressiva na distribuição do uso do sistema, sendo o inverno fortemente associado à baixa utilização. Constatou-se que 82,19\% dos dias de inverno foram classificados como de baixa adesão (60 de 73 dias), apresentando a menor média do período (1.639,82 usuários), como detalhado na Tabela 1 da Seção 3.1. A análise visual confirmou essa disparidade, evidenciando que a mediana e o terceiro quartil do inverno encontram-se significativamente abaixo do limite global de baixa utilização ($Q_1 = 2105,5$), contrastando com o verão (conforme a Figura 3 da Seção 3.1), que obteve a maior média de usuários (4.464,36) e apenas 3,19\% de dias com baixa utilização.
+
+\end{document}
+
