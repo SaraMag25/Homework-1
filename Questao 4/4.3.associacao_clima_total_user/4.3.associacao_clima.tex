@@ -1,0 +1,30 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc} 
+\usepackage{graphicx}     
+\usepackage{float}          
+
+\begin{document}
+
+\subsection*{4.3. Associação entre Condições Meteorológicas e Utilização do Sistema}
+
+Para a segunda característica selecionada na Questão 3, as condições meteorológicas (\texttt{weathersit}), a abordagem estatística requerida é diferente. Por se tratar de uma variável categórica que divide os dias em grupos distintos (1 = Bom, 2 = Nublado/Misto, 3 = Chuva/Neve Leve) a ser comparada com uma variável contínua (\texttt{total\_user}), utilizou-se a \textbf{Análise de Variância (ANOVA)}. Para a visualização da distribuição dos dados em cada categoria, optou-se pelo \textit{boxplot}.
+
+A execução do teste ANOVA devolveu um \textit{p-value} de aproximadamente $2,13 \times 10^{-9}$. A representação visual desta distribuição encontra-se na Figura \ref{fig:boxplot_clima}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Associação entre condições meteorológicas e total de utilizadores diários.}
+    \vspace{0.1cm}
+    \includegraphics[width=0.8\textwidth]{4.3.boxplot_clima.png}
+    \\ \vspace{0.1cm}
+    \footnotesize{Fonte: Elaborado pelos autores (2026) com base nos dados de \texttt{2.1.total\_user.xlsx}.}
+    \label{fig:boxplot_clima}
+\end{figure}
+
+\textbf{Interpretação e Comparação com Resultados Anteriores}
+
+O \textit{p-value} obtido ($p < 0,05$) indica que existe uma diferença estatisticamente significativa na média de utilizadores entre os diferentes tipos de clima. Observando o \textit{boxplot}, é evidente que a mediana e a concentração de alugueres são consideravelmente superiores nos dias de clima limpo, sofrendo uma queda drástica nos dias de precipitação.
+
+Esta validação matemática corrobora de forma absoluta as observações qualitativas documentadas na Questão 3. A redução do uso do sistema não é um evento aleatório, mas sim uma consequência direta e estatisticamente provada do agravamento das condições meteorológicas, consolidando o clima como um fator determinante na procura por bicicletas.
+
+\end{document}
