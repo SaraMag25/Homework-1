@@ -1,0 +1,351 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{mathptmx}         
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[font=small,labelsep=endash]{caption}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\graphicspath{{./}{figuras/}}
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setcounter{secnumdepth}{4}
+\setcounter{section}{3}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\renewcommand{\theparagraph}{\thesubsubsection.\arabic{paragraph}}
+\titleformat{\section}{\normalfont\normalsize\bfseries\MakeUppercase}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[block]{\normalfont\normalsize\itshape}{\theparagraph}{1em}{}
+\titlespacing*{\section}{0pt}{1.5em}{1em}
+\titlespacing*{\subsection}{0pt}{1.5em}{1em}
+\titlespacing*{\subsubsection}{0pt}{1.2em}{0.8em}
+\titlespacing*{\paragraph}{0pt}{1em}{0.6em}
+
+\renewcommand{\arraystretch}{1.2}
+
+\begin{document}
+
+\section{Análise Estatística do Sistema de Compartilhamento de Bicicletas}
+
+\subsection{Análise da Série Temporal de \texttt{total\_user}}
+
+\subsubsection{Introdução}
+
+O primeiro item da Questão 4 tem como objetivo analisar o comportamento temporal
+da utilização do sistema de compartilhamento de bicicletas por meio da variável
+\texttt{total\_user}. Para isso, foi construída uma série temporal considerando
+as observações diárias do conjunto de dados específico do grupo, formado por 300
+registros consecutivos.
+
+A variável \texttt{total\_user} representa o número total de usuários do sistema
+em cada dia e é obtida pela soma entre o número de usuários casuais e registrados:
+
+\begin{equation}
+\text{total\_user}_i =
+\text{casual}_i + \text{registered}_i,
+\end{equation}
+
+em que $i$ representa cada observação diária.
+
+A análise da série temporal permite identificar períodos de maior e menor
+utilização do sistema, além de observar tendências e oscilações ao longo do
+período analisado.
+
+\subsubsection{Construção da série temporal}
+
+Para a construção da série temporal, as observações foram organizadas em ordem
+cronológica utilizando a variável \texttt{dteday}. No eixo horizontal do gráfico
+foram representadas as datas das observações, enquanto no eixo vertical foi
+representado o número total de usuários em cada dia.
+
+A Figura \ref{fig:serie-temporal} apresenta a evolução diária da variável
+\texttt{total\_user} durante o período analisado.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{4.1.serie_temporal_total_user.png}
+        \caption{Série temporal do número total de usuários do sistema.}
+    \label{fig:serie-temporal}
+\end{figure}
+
+A representação gráfica evidencia variações diárias importantes na utilização
+do sistema, além de mudanças no nível geral de demanda ao longo dos meses.
+
+\subsubsection{Identificação dos valores máximo e mínimo}
+
+A partir da série temporal, foram identificadas as observações correspondentes à
+maior e à menor utilização do sistema no conjunto analisado.
+
+\begin{table}[H]
+\centering
+\caption{Maior e menor utilização observadas no período}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Situação} & \textbf{Data} & \textbf{Total de usuários} \\
+\midrule
+Maior utilização & 04/07/2011 & 6043 \\
+Menor utilização & 27/01/2011 & 431 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O maior valor registrado ocorreu em 04 de julho de 2011, quando foram
+contabilizados 6043 usuários. Em contraste, o menor valor do período foi
+observado em 27 de janeiro de 2011, com 431 usuários.
+
+\subsubsection{Análise dos períodos de maior e menor utilização}
+
+\paragraph{Período de menor utilização}
+
+Nos primeiros meses da série, especialmente durante janeiro e fevereiro,
+observam-se níveis de utilização relativamente menores. Grande parte das
+observações desse período encontra-se em patamares inferiores aos verificados
+nos meses posteriores.
+
+O menor valor de toda a série ocorre em 27 de janeiro, com 431 usuários. Além
+desse ponto mínimo, o início da série apresenta diversos dias com valores
+próximos ou inferiores a aproximadamente 2000 usuários, indicando um período de
+demanda reduzida em comparação com os meses seguintes.
+
+\paragraph{Período de crescimento da utilização}
+
+Entre março e abril, a série apresenta uma elevação gradual no número total de
+usuários. Os valores passam progressivamente de níveis próximos de 2000 usuários
+para observações frequentemente superiores a 3000 e 4000 usuários.
+
+Esse comportamento caracteriza uma mudança importante no nível de utilização do
+sistema. Embora permaneçam algumas quedas pontuais, o comportamento geral indica
+aumento da demanda ao longo desse intervalo.
+
+\paragraph{Período de maior utilização}
+
+A partir de maio, a série passa a apresentar valores predominantemente mais
+elevados. Entre maio e julho, grande parte das observações encontra-se entre
+aproximadamente 4000 e 5500 usuários.
+
+O ponto máximo da série ocorre em 04 de julho de 2011, com 6043 usuários. Esse
+resultado está inserido em um período no qual vários dias também apresentam
+valores próximos ou superiores a 5000 usuários, caracterizando uma fase de
+utilização elevada do sistema.
+
+\paragraph{Comportamento após o valor máximo}
+
+Após julho, o número total de usuários permanece elevado em muitos dias, porém
+a série passa a apresentar oscilações mais intensas.
+
+Entre agosto e outubro, são observados diversos valores entre aproximadamente
+4000 e 5000 usuários, intercalados com quedas acentuadas. Dessa forma, embora o
+nível geral de utilização permaneça elevado, a variabilidade diária torna-se
+mais evidente.
+
+\subsubsection{Principais padrões observados}
+
+A análise da série temporal permite identificar três características principais.
+Primeiramente, observa-se uma tendência de crescimento da utilização durante a
+primeira metade do período analisado. Os valores registrados em janeiro e
+fevereiro são, em geral, inferiores aos observados nos meses seguintes, enquanto
+março e abril representam uma fase de transição para níveis mais elevados de
+demanda.
+
+Em segundo lugar, entre maio e julho ocorre o período de utilização mais intensa.
+Nesse intervalo, os valores permanecem frequentemente acima de 4000 usuários,
+culminando no máximo de 6043 usuários em 04 de julho.
+
+Por fim, após o período de crescimento, a série apresenta um nível elevado de
+utilização acompanhado de maior variabilidade. Entre agosto e outubro são
+observadas sucessivas oscilações, com dias de utilização elevada intercalados
+com quedas acentuadas.
+
+\subsubsection{Conclusão}
+
+A construção da série temporal de \texttt{total\_user} permitiu visualizar a
+evolução da utilização do sistema de compartilhamento de bicicletas ao longo das
+300 observações do grupo.
+
+O menor valor observado foi de 431 usuários em 27 de janeiro de 2011, enquanto
+o maior valor foi de 6043 usuários em 04 de julho de 2011. A série apresenta
+níveis relativamente baixos no início do período, seguidos por crescimento
+progressivo durante março e abril.
+
+Entre maio e julho, a utilização atinge seus maiores níveis, com grande
+concentração de observações acima de 4000 usuários. Após esse período, a demanda
+permanece relativamente elevada, porém acompanhada por oscilações diárias mais
+acentuadas.
+
+Dessa forma, a análise temporal evidencia tanto uma tendência de crescimento na
+primeira metade do período quanto uma maior variabilidade na segunda metade,
+fornecendo uma visão geral da evolução da demanda pelo sistema ao longo do tempo.
+
+\subsection{Associação entre Temperatura e Utilização do Sistema}
+
+Para aprofundar a análise iniciada na Questão 3 a respeito do impacto térmico, selecionou-se a variável quantitativa contínua da temperatura (\texttt{temp}) para avaliar estatisticamente a sua associação com o volume diário de usuários (\texttt{total\_user}).
+
+Como ambas as variáveis são contínuas, a medida estatística adequada escolhida foi o \textbf{Coeficiente de Correlação de Pearson}. Esta métrica quantifica a força e a direção da relação linear entre os dados. Para a representação visual, optou-se por um gráfico de dispersão (\textit{scatter plot}) acrescido de uma reta de regressão linear para facilitar a observação da tendência.
+
+A execução do teste estatístico computacional resultou em um coeficiente de correlação de \textbf{0,8058}. O comportamento visual desta distribuição é apresentado na Figura \ref{fig:dispersao_temp}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Associação linear entre temperatura e total de usuários diários.}
+    \vspace{0.1cm}
+    \includegraphics[width=0.8\textwidth]{4.2.grafico_dispersao_temp.png}
+    \\ \vspace{0.1cm}
+    \footnotesize{Fonte: Elaborado pelos autores (2026) com base nos dados de \texttt{2.1.total\_user.xlsx}.}
+    \label{fig:dispersao_temp}
+\end{figure}
+
+\textbf{Interpretação e Comparação com Resultados Anteriores}
+
+O valor obtido ($r \approx 0,81$) indica uma correlação linear positiva e de forte intensidade. Isso significa que há uma proporção direta bastante consistente: a elevação da temperatura está intimamente associada ao crescimento do número total de ciclistas no sistema.
+
+Este resultado fundamenta matematicamente as conclusões qualitativas obtidas na Questão 3. Naquela etapa, constatou-se que os dias com temperaturas mais agradáveis e quentes (como os meses centrais do ano, cujo ápice de uso ocorreu em julho) concentravam maiores volumes de demanda. O teste de Pearson comprova de forma contundente que esse comportamento não é apenas uma flutuação sazonal, mas sim uma tendência estatística robusta. A temperatura atua como um forte preditor do volume de aluguéis, validando plenamente as hipóteses levantadas na etapa anterior do estudo.
+
+\subsection{Associação entre Condições Meteorológicas e Utilização do Sistema}
+
+Para a segunda característica selecionada na Questão 3, as condições meteorológicas (\texttt{weathersit}), a abordagem estatística requerida é diferente. Por se tratar de uma variável categórica que divide os dias em grupos distintos (1 = Bom, 2 = Nublado/Misto, 3 = Chuva/Neve Leve) a ser comparada com uma variável contínua (\texttt{total\_user}), utilizou-se a \textbf{Análise de Variância (ANOVA)}. Para a visualização da distribuição dos dados em cada categoria, optou-se pelo \textit{boxplot}.
+
+A execução do teste ANOVA devolveu um \textit{p-value} de aproximadamente $2,13 \times 10^{-9}$. A representação visual desta distribuição encontra-se na Figura \ref{fig:boxplot_clima}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Associação entre condições meteorológicas e total de utilizadores diários.}
+    \vspace{0.1cm}
+    \includegraphics[width=0.8\textwidth]{4.3.boxplot_clima.png}
+    \\ \vspace{0.1cm}
+    \footnotesize{Fonte: Elaborado pelos autores (2026) com base nos dados de \texttt{2.1.total\_user.xlsx}.}
+    \label{fig:boxplot_clima}
+\end{figure}
+
+\textbf{Interpretação e Comparação com Resultados Anteriores}
+
+O \textit{p-value} obtido ($p < 0,05$) indica que existe uma diferença estatisticamente significativa na média de utilizadores entre os diferentes tipos de clima. Observando o \textit{boxplot}, é evidente que a mediana e a concentração de alugueres são consideravelmente superiores nos dias de clima limpo, sofrendo uma queda drástica nos dias de precipitação.
+
+Esta validação matemática corrobora de forma absoluta as observações qualitativas documentadas na Questão 3. A redução do uso do sistema não é um evento aleatório, mas sim uma consequência direta e estatisticamente provada do agravamento das condições meteorológicas, consolidando o clima como um fator determinante na procura por bicicletas.
+
+\subsection{Temperatura e baixa utilização}
+
+\subsubsection{Critério e preparação dos dados}
+
+A análise mantém a seleção definida na Questão 1: com $M=581706$,
+$r=1+(M\bmod 100)=7$, sendo utilizadas as $300$ observações consecutivas
+de 07/01/2011 a 02/11/2011. O total diário e a classificação seguem as
+definições da Questão 2:
+\[
+U_i=\texttt{casual}_i+\texttt{registered}_i,
+\qquad Q_1(U)=2105{,}5,
+\]
+\[
+\texttt{low\_usage}_i=
+\begin{cases}
+1, & U_i<Q_1(U),\\
+0, & U_i\geq Q_1(U).
+\end{cases}
+\]
+O quartil foi calculado sobre os $300$ dias pelo método
+\texttt{quantile(type = 7)} do R, antes de dividir as observações em grupos.
+Assim, $75$ dias ($25\%$) são classificados como de baixa utilização e os
+$225$ restantes pertencem ao outro grupo. Não se recalcula um quartil para
+cada grupo ou estação.
+
+Para tornar o eixo horizontal interpretável, a temperatura normalizada do
+enunciado é convertida por $T_{\mathrm{C}}=41T_{\mathrm{norm}}$. O script
+também reconhece uma coluna que já esteja em graus Celsius. Nenhuma
+observação é excluída ou reordenada.
+
+\subsubsection{Dispersão e classificação dos dias}
+
+A Figura~\ref{fig:dispersao} representa a temperatura e o total de usuários
+em cada dia. A linha horizontal marca o mesmo $Q_1$ usado na classificação:
+os pontos abaixo dela pertencem a \texttt{low\_usage = 1}. A concentração
+dos dias de baixa utilização ocorre predominantemente em temperaturas
+menores, enquanto os totais mais elevados são observados com maior
+frequência em temperaturas moderadas a altas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\linewidth]{questao_4_3_dispersao.png}
+\caption{Temperatura e total diário, com os $300$ dias diferenciados pela
+classificação de baixa utilização. A linha tracejada é $Q_1=2105{,}5$.
+Gráfico produzido pelo script \texttt{questao\_4\_3.R}.}
+\label{fig:dispersao}
+\end{figure}
+
+\subsubsection{Comparação visual entre os grupos}
+
+A Figura~\ref{fig:paineis} separa os dois grupos, preservando as mesmas
+escalas nos eixos. As retas descrevem a tendência linear \emph{dentro de
+cada subconjunto} e foram desenhadas apenas no intervalo de temperatura
+observado no respectivo grupo. A comparação mostra uma tendência positiva
+aparentemente menos marcada entre os dias de baixa utilização.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.80\linewidth]{questao_4_3_paineis.png}
+\caption{Temperatura e utilização nos dois grupos. As escalas são iguais;
+as retas representam ajustes lineares descritivos. Gráfico produzido pelo
+script \texttt{questao\_4\_3.R} a partir da tabela do PDF, cuja temperatura
+é arredondada. Execute o script com o CSV original para os valores finais.}
+\label{fig:paineis}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Temperatura e correlação de Pearson em cada grupo.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Grupo & Dias & Média de $T$ & Intervalo de $T$ & $r(T,U)$ \\
+\midrule
+Baixa utilização & 75 & $11{,}08\,^{\circ}\mathrm C$ & $2{,}4$--$27{,}9\,^{\circ}\mathrm C$ & $0{,}277$ \\
+Demais dias & 225 & $24{,}50\,^{\circ}\mathrm C$ & $10{,}8$--$34{,}8\,^{\circ}\mathrm C$ & $0{,}568$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Interpretação e limitações}
+
+O coeficiente de Pearson é positivo em ambos os grupos, mas menor entre os
+dias classificados como de baixa utilização ($r\approx0{,}277$) do que nos
+demais ($r\approx0{,}568$). As temperaturas médias também diferem:
+$11{,}08\,^{\circ}\mathrm C$ e $24{,}50\,^{\circ}\mathrm C$,
+respectivamente. A presença de dias quentes com pouco uso impede uma leitura
+determinista da relação: em 27/08/2011, por exemplo, constam aproximadamente
+$27{,}9\,^{\circ}\mathrm C$ e $1115$ usuários.
+
+Essa comparação é descritiva. A variável \texttt{low\_usage} foi construída
+a partir do próprio total de usuários, representado no eixo vertical. A
+separação restringe por definição a faixa de $U$ em cada grupo; diferenças
+entre correlações ou inclinações calculadas depois do corte não demonstram
+efeitos causais distintos da temperatura. Estação do ano e condições
+meteorológicas também podem estar associadas à utilização. Na amostra,
+$60$ dos $75$ dias de baixa utilização ocorreram no inverno.
+
+Nas dez primeiras observações do grupo, todos os dias satisfazem
+$U_i<2105{,}5$. Portanto, não existe nesse recorte inicial uma segunda
+classe com a qual comparar a relação. A avaliação entre os dois grupos
+depende das $300$ observações completas.
+
+\subsection{Conclusão}
+
+A análise das 300 observações revela que a utilização do sistema de bicicletas é severamente influenciada por fatores sazonais e meteorológicos. A série temporal (Questão 4) ilustra bem a evolução da procura, registando um mínimo no início do ano (431 utilizadores) e atingindo o pico absoluto nos meses centrais (6.043 utilizadores).
+
+Dentre as características avaliadas na Questão 3, a temperatura e a estação do ano destacaram-se. Observou-se uma forte correlação positiva entre a temperatura e a utilização do sistema ($r \approx 0,81$). O inverno concentrou os períodos de maior ociosidade, com 82,19\% dos seus dias situados abaixo do primeiro quartil global ($Q_1 = 2105,5$, Questão 2).
+
+A Questão 4 demonstrou que a restrição de alugueres diários enfraquece a correlação com a temperatura, decrescendo de $r \approx 0,568$ (uso normal) para $r \approx 0,277$ (baixa utilização). Cruzando os dados climáticos, constatou-se que a precipitação reduz a média diária de alugueres de 3.851 (céu limpo) para apenas 1.562. Estes resultados indicam que a gestão operacional da frota deve alinhar-se rigorosamente às previsões meteorológicas diárias.
+
+\end{document}
