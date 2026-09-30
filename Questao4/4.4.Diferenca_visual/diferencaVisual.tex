@@ -1,0 +1,133 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,graphicx}
+\usepackage{float}
+\usepackage{geometry,microtype}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+\geometry{left=2.3cm,right=2.3cm,top=2.3cm,bottom=2.2cm}
+\graphicspath{{figuras/}}
+\definecolor{heading}{HTML}{17324D}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\renewcommand{\arraystretch}{1.2}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabela}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Questão 4.3 --- Bike Sharing}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+{\Large\bfseries\color{heading}Questão 4.3 --- Temperatura e baixa utilização}\par
+
+\section*{Critério e preparação dos dados}
+
+A análise mantém a seleção definida na Questão 1: com $M=581706$,
+$r=1+(M\bmod 100)=7$, sendo utilizadas as $300$ observações consecutivas
+de 07/01/2011 a 02/11/2011. O total diário e a classificação seguem as
+definições da Questão 2:
+\[
+U_i=\texttt{casual}_i+\texttt{registered}_i,
+\qquad Q_1(U)=2105{,}5,
+\]
+\[
+\texttt{low\_usage}_i=
+\begin{cases}
+1, & U_i<Q_1(U),\\
+0, & U_i\geq Q_1(U).
+\end{cases}
+\]
+O quartil foi calculado sobre os $300$ dias pelo método
+\texttt{quantile(type = 7)} do R, antes de dividir as observações em grupos.
+Assim, $75$ dias ($25\%$) são classificados como de baixa utilização e os
+$225$ restantes pertencem ao outro grupo. Não se recalcula um quartil para
+cada grupo ou estação.
+
+Para tornar o eixo horizontal interpretável, a temperatura normalizada do
+enunciado é convertida por $T_{\mathrm{C}}=41T_{\mathrm{norm}}$. O script
+também reconhece uma coluna que já esteja em graus Celsius. Nenhuma
+observação é excluída ou reordenada.
+
+\section*{Dispersão e classificação dos dias}
+
+A Figura~\ref{fig:dispersao} representa a temperatura e o total de usuários
+em cada dia. A linha horizontal marca o mesmo $Q_1$ usado na classificação:
+os pontos abaixo dela pertencem a \texttt{low\_usage = 1}. A concentração
+dos dias de baixa utilização ocorre predominantemente em temperaturas
+menores, enquanto os totais mais elevados são observados com maior
+frequência em temperaturas moderadas a altas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\linewidth]{questao_4_3_dispersao.png}
+\caption{Temperatura e total diário, com os $300$ dias diferenciados pela
+classificação de baixa utilização. A linha tracejada é $Q_1=2105{,}5$.
+Gráfico produzido pelo script \texttt{questao\_4\_3.R}.}
+\label{fig:dispersao}
+\end{figure}
+
+\clearpage
+\section*{Comparação visual entre os grupos}
+
+A Figura~\ref{fig:paineis} separa os dois grupos, preservando as mesmas
+escalas nos eixos. As retas descrevem a tendência linear \emph{dentro de
+cada subconjunto} e foram desenhadas apenas no intervalo de temperatura
+observado no respectivo grupo. A comparação mostra uma tendência positiva
+aparentemente menos marcada entre os dias de baixa utilização.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.80\linewidth]{questao_4_3_paineis.png}
+\caption{Temperatura e utilização nos dois grupos. As escalas são iguais;
+as retas representam ajustes lineares descritivos. Gráfico produzido pelo
+script \texttt{questao\_4\_3.R} a partir da tabela do PDF, cuja temperatura
+é arredondada. Execute o script com o CSV original para os valores finais.}
+\label{fig:paineis}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Temperatura e correlação de Pearson em cada grupo.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Grupo & Dias & Média de $T$ & Intervalo de $T$ & $r(T,U)$ \\
+\midrule
+Baixa utilização & 75 & $11{,}08\,^{\circ}\mathrm C$ & $2{,}4$--$27{,}9\,^{\circ}\mathrm C$ & $0{,}277$ \\
+Demais dias & 225 & $24{,}50\,^{\circ}\mathrm C$ & $10{,}8$--$34{,}8\,^{\circ}\mathrm C$ & $0{,}568$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section*{Interpretação e limitações}
+
+O coeficiente de Pearson é positivo em ambos os grupos, mas menor entre os
+dias classificados como de baixa utilização ($r\approx0{,}277$) do que nos
+demais ($r\approx0{,}568$). As temperaturas médias também diferem:
+$11{,}08\,^{\circ}\mathrm C$ e $24{,}50\,^{\circ}\mathrm C$,
+respectivamente. A presença de dias quentes com pouco uso impede uma leitura
+determinista da relação: em 27/08/2011, por exemplo, constam aproximadamente
+$27{,}9\,^{\circ}\mathrm C$ e $1115$ usuários.
+
+Essa comparação é descritiva. A variável \texttt{low\_usage} foi construída
+a partir do próprio total de usuários, representado no eixo vertical. A
+separação restringe por definição a faixa de $U$ em cada grupo; diferenças
+entre correlações ou inclinações calculadas depois do corte não demonstram
+efeitos causais distintos da temperatura. Estação do ano e condições
+meteorológicas também podem estar associadas à utilização. Na amostra,
+$60$ dos $75$ dias de baixa utilização ocorreram no inverno.
+
+Nas dez primeiras observações do grupo, todos os dias satisfazem
+$U_i<2105{,}5$. Portanto, não existe nesse recorte inicial uma segunda
+classe com a qual comparar a relação. A avaliação entre os dois grupos
+depende das $300$ observações completas.
+
+\end{document}
