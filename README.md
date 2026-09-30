@@ -1,27 +1,36 @@
-# Homework 1
+# Homework 1 - Estatística para Engenharia
 
-Repositório do Homework 1 da disciplina de Estatística para Engenharia. O trabalho consiste em aplicar conceitos de estatística descritiva em um conjunto de dados real, utilizando a linguagem R.
+Repositório correspondente ao primeiro trabalho prático (Homework 1) da disciplina de Estatística para Engenharia. O objetivo principal deste projeto é aplicar conceitos de estatística descritiva e análise exploratória num conjunto de dados real, recorrendo à linguagem R.
 
-## Sobre o projeto
+## Sobre o Projeto
 
-O projeto utiliza o dataset `HW1_bike_sharing.csv`, que contém dados de aluguel de bicicletas de uma cidade dos EUA. Como a metodologia da disciplina exige que cada grupo trabalhe com uma amostra diferente, foram extraídas 300 observações consecutivas do dataset original. O ponto de partida foi definido a partir da matrícula mais alta da equipe (M = 581706), resultando no índice r = 7.
+A análise incide sobre o dataset `HW1_bike_sharing.csv`, que documenta o aluguer diário de bicicletas numa cidade dos EUA. Para garantir a originalidade da análise estatística, a metodologia da disciplina exige que cada grupo trabalhe com uma amostra única. 
 
-## Estrutura do repositório
+Foi extraída uma amostra de 300 observações consecutivas do dataset original. O ponto de partida da amostra foi definido com base na matrícula mais alta da equipa (M = 581706), o que resultou no índice inicial r = 7.
 
-- `HW1_bike_sharing.csv` — base de dados original.
-- `Homework1/` — pasta contendo o relatório final, redigido de forma colaborativa em LaTeX através do Overleaf.
-- `Questao1/` — pasta contendo o script em R (`data_group.R`) desenvolvido para o cálculo das estatísticas descritivas das 10 primeiras observações da amostra.
+## Estrutura do Repositório
 
-## Tecnologias
+O repositório está organizado de forma modular, separando a base de dados, o relatório final e o código correspondente a cada questão analisada:
 
-- **R e RStudio** — manipulação de dados, cálculos estatísticos e ambiente de desenvolvimento (IDE).
-- **LaTeX / Overleaf** — formatação e redação do relatório acadêmico.
-- **Git/GitHub** — versionamento de código e colaboração em equipe.
-- **Trello** — gerenciamento de tarefas e organização do fluxo de trabalho do grupo.
+* **`HW1_bike_sharing.csv`**: Base de dados original completa.
+* **`data_group.xlsx`**: Base de dados filtrada com a amostra específica utilizada pelo grupo.
+* **`Homework1/`**: Diretório contendo o relatório final, redigido de forma colaborativa.
+* **`Questao1/` a `Questao 4/`**: Pastas individuais dedicadas a cada fase do projeto. Cada subdiretório contém:
+  * Scripts em R responsáveis pelos cálculos estatísticos e testes (e.g., espaço amostral, tendência central, ANOVA).
+  * Ficheiros `.tex` com a respetiva documentação em formato LaTeX.
+  * Subpastas de imagens com os gráficos gerados (histogramas, boxplots, gráficos de dispersão).
 
-## Equipe
+## Tecnologias e Ferramentas
 
-- Allan Martins Gadelha (579087)
-- Clarisse Maria Cabral Montenegro (580585)
-- Maria Luisa Fernandes de Mendonça (581706)
-- Sara de Sousa Magalhães (581189)
+* **Visual Studio Code (VS Code)**: Editor de código principal utilizado para o desenvolvimento dos scripts R, formatação local dos ficheiros LaTeX, execução de comandos Git e geração de gráficos.
+* **R e RStudio**: Editor de código principal utilizado para o desenvolvimento dos scripts R, formatação local dos ficheiros LaTeX, execução de comandos Git e geração de gráficos.
+* **LaTeX e Overleaf**: Redação, formatação rigorosa e compilação do relatório académico final.
+* **Git e GitHub**: Controlo de versões do código e colaboração assíncrona entre os membros do grupo.
+* **Trello**: Gestão ágil de tarefas e acompanhamento do progresso do trabalho.
+
+## Equipa
+
+* Allan Martins Gadelha (579087)
+* Clarisse Maria Cabral Montenegro (580585)
+* Maria Luisa Fernandes de Mendonça (581706)
+* Sara de Sousa Magalhães (581189)
