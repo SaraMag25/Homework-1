@@ -1,0 +1,16 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+\begin{document}
+
+\section*{4.4- Conclusão}
+
+A análise das 300 observações revela que a utilização do sistema de bicicletas é severamente influenciada por fatores sazonais e meteorológicos. A série temporal (Questão 4) ilustra bem a evolução da procura, registando um mínimo no início do ano (431 utilizadores) e atingindo o pico absoluto nos meses centrais (6.043 utilizadores).
+
+Dentre as características avaliadas na Questão 3, a temperatura e a estação do ano destacaram-se. Observou-se uma forte correlação positiva entre a temperatura e a utilização do sistema ($r \approx 0,81$). O inverno concentrou os períodos de maior ociosidade, com 82,19\% dos seus dias situados abaixo do primeiro quartil global ($Q_1 = 2105,5$, Questão 2).
+
+A Questão 4 demonstrou que a restrição de alugueres diários enfraquece a correlação com a temperatura, decrescendo de $r \approx 0,568$ (uso normal) para $r \approx 0,277$ (baixa utilização). Cruzando os dados climáticos, constatou-se que a precipitação reduz a média diária de alugueres de 3.851 (céu limpo) para apenas 1.562. Estes resultados indicam que a gestão operacional da frota deve alinhar-se rigorosamente às previsões meteorológicas diárias.
+
+\end{document}
