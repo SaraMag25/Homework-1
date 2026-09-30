@@ -1,0 +1,316 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{listings}
+\geometry{margin=2.5cm}
+\graphicspath{{./}}
+\renewcommand{\arraystretch}{1.2}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabela}
+\definecolor{fundocodigo}{RGB}{247,247,247}
+\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{fundocodigo},
+  frame=single,breaklines=true,columns=fullflexible,showstringspaces=false,
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+           {ã}{{\~a}}1 {õ}{{\~o}}1 {ç}{{\c c}}1}
+
+\title{Questão 2 -- Caracterização e Análise Descritiva do Conjunto de Dados\\
+  \large Dados de Compartilhamento de Bicicletas}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introdução}
+
+A Questão 2 analisa o conjunto específico do grupo construído na Questão 1.
+São 300 observações diárias consecutivas, identificadas pelos índices 7 a 306,
+entre 7 de janeiro e 2 de novembro de 2011. A variável
+\texttt{total\_user} registra o número diário de usuários e corresponde à soma
+de \texttt{casual} e \texttt{registered}. A análise começa pela estrutura e
+completude da base, passa pelas medidas de tendência central e pelos quartis,
+examina a distribuição em gráficos e termina com a classificação dos dias de
+baixa utilização.
+
+Todos os resultados numéricos a seguir se referem à amostra de 300 dias, e não
+à base original de 731 observações. Nas seções correspondentes, são indicados
+o procedimento, os resultados e a interpretação de cada etapa.
+
+\section{Classificação e identificação das variáveis (etapa 2.1)}
+
+\subsection{Procedimento}
+
+Inicialmente, foram identificadas as colunas da planilha e verificada a
+função de cada uma. A coluna \texttt{...1} reproduz o índice
+\texttt{instant}; por isso, é apenas uma coluna auxiliar e não foi contada
+como uma variável adicional. Entre as oito variáveis de interesse,
+\texttt{instant} é um identificador numérico discreto, \texttt{dteday} é uma
+data, \texttt{season} e \texttt{weathersit} são categóricas, e
+\texttt{temp}, \texttt{casual}, \texttt{registered} e
+\texttt{total\_user} são quantitativas. As três últimas contagens são
+discretas; a temperatura é contínua.
+
+\begin{table}[H]
+\centering\footnotesize
+\renewcommand{\arraystretch}{1.06}
+\caption{Natureza e interpretação das variáveis da amostra.}
+\begin{tabular}{p{2.3cm}p{3.6cm}p{8.6cm}}
+\toprule
+Variável & Natureza & Interpretação e unidade \\
+\midrule
+\texttt{instant} & Índice discreto & Identificador sequencial, de 7 a 306; sem unidade física. \\
+\texttt{dteday} & Temporal & Data da observação; resolução de um dia. \\
+\texttt{season} & Categórica & Estação do ano: inverno, primavera, verão ou outono. \\
+\texttt{weathersit} & Categórica & Condição meteorológica registrada no dia. \\
+\texttt{temp} & Contínua & Temperatura na escala numérica da planilha, de 2,4 a 34,8. \\
+\texttt{casual} & Discreta & Contagem diária de usuários casuais, em usuários. \\
+\texttt{registered} & Discreta & Contagem diária de usuários registrados, em usuários. \\
+\texttt{total\_user} & Discreta derivada & Contagem diária total, em usuários. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+No segundo passo, contaram-se as categorias observadas em
+\texttt{season} e \texttt{weathersit}. Foram encontrados 73 dias de inverno,
+92 de primavera, 94 de verão e 41 de outono. Para as condições
+meteorológicas, a amostra contém 184 dias de céu limpo, 106 dias nublados e
+10 dias de chuva fraca. As frequências de cada variável somam 300.
+
+Por fim, verificou-se a presença de valores ausentes em cada coluna: não há
+\texttt{NA} em nenhuma das 300 linhas. Conferiu-se também a relação
+\begin{equation}
+\texttt{total\_user}_i=\texttt{casual}_i+\texttt{registered}_i,
+\end{equation}
+válida para todas as observações. Essa verificação é necessária porque o
+total de usuários será usado nas etapas seguintes.
+
+\subsection{Conclusão da etapa}
+
+A amostra tem oito variáveis analíticas, uma coluna auxiliar de indexação e
+nenhum valor ausente. As estações e as condições meteorológicas estão
+representadas pelas categorias indicadas acima. A ausência de valores
+faltantes dispensa imputação nesta análise, mas, isoladamente, não comprova
+ausência de outros problemas de qualidade de dados.
+
+\section{Medidas de tendência central (etapa 2.2)}
+
+\subsection{Seleção das variáveis e cálculo da média}
+
+Foram selecionadas \texttt{temp}, \texttt{casual}, \texttt{registered} e
+\texttt{total\_user}, pois representam medidas quantitativas interpretáveis.
+Não se calcula a média de \texttt{instant}, que apenas identifica registros,
+nem dos códigos das categorias. Para cada variável $x$, a média das
+$n=300$ observações é
+\begin{equation}
+\overline{x}=\frac{1}{300}\sum_{i=1}^{300}x_i.
+\end{equation}
+Por exemplo, a soma de \texttt{total\_user} é 1.053.964; logo,
+\begin{equation}
+\overline{\texttt{total\_user}}=
+\frac{1.053.964}{300}=3.513{,}2133\simeq 3.513{,}21.
+\end{equation}
+
+\subsection{Ordenação, mediana e moda}
+
+Em seguida, ordenaram-se separadamente os valores de cada variável em ordem
+crescente. Como 300 é par, a mediana é a média dos valores nas posições 150 e
+151 da sequência ordenada:
+\begin{equation}
+\operatorname{Md}(x)=\frac{x_{(150)}+x_{(151)}}{2}.
+\end{equation}
+Para \texttt{total\_user}, esses valores são 3.982 e 4.010, resultando em
+mediana de 3.996. Para a moda, contaram-se as ocorrências de cada valor e
+identificou-se a maior frequência. A moda, diferentemente da mediana, não
+precisa ser única.
+
+\begin{table}[H]
+\centering\small
+\caption{Medidas de tendência central nas 300 observações.}
+\begin{tabular}{lrrp{5.5cm}}
+\toprule
+Variável & Média & Mediana & Moda \\
+\midrule
+\texttt{temp} & 21,15 & 22,2 & 26,0 (6 ocorrências) \\
+\texttt{casual} & 743,77 & 673 & 639 (3 ocorrências) \\
+\texttt{registered} & 2.769,45 & 3.093 & 16 valores empatados, cada um com 2 ocorrências \\
+\texttt{total\_user} & 3.513,21 & 3.996 & 9 valores empatados, cada um com 2 ocorrências \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Conclusão da etapa}
+
+Os usuários registrados representam a maior parcela do uso: sua média é
+2.769,45, contra 743,77 para usuários casuais. A mediana do total (3.996)
+supera sua média (3.513,21), mostrando que o valor médio é sensível aos dias
+de menor procura. Para \texttt{registered} e \texttt{total\_user}, há várias
+modas empatadas com frequência máxima de apenas duas observações; portanto,
+uma moda isolada não descreve bem o centro dessas distribuições. A relação
+entre média e mediana sugere uma distribuição não simétrica, mas a forma
+completa deve ser examinada nos gráficos da etapa 2.4.
+
+\section{Quartis e identificação de valores atípicos (etapa 2.3)}
+
+\subsection{Ordenação e cálculo dos quartis}
+
+A variável escolhida foi \texttt{total\_user}, pois reúne os usuários
+casuais e registrados e mede a demanda total em cada dia. Antes de calcular
+os quartis, seus 300 valores foram colocados em ordem crescente. Foi usado o
+método \texttt{type = 7} de \texttt{quantile()} no R. Nesse método, a posição
+teórica do quantil de probabilidade $p$ é
+\begin{equation}
+h=1+(n-1)p.
+\end{equation}
+Para $p=0{,}25$, $h=75{,}75$; para $p=0{,}75$, $h=225{,}25$.
+Valores em posições fracionárias são obtidos por interpolação entre as
+observações ordenadas vizinhas. Os resultados são
+\begin{equation}
+Q_1=2.105{,}5,\qquad Q_2=3.996,\qquad Q_3=4.681.
+\end{equation}
+
+O procedimento pode ser reproduzido no R por:
+\begin{lstlisting}[language=R]
+x <- sort(dados$total_user)
+quartis <- quantile(x, probs = c(0.25, 0.50, 0.75), type = 7)
+print(quartis)
+\end{lstlisting}
+
+\subsection{Intervalo interquartil e limites}
+
+A dispersão dos 50\% centrais dos valores é medida pelo intervalo
+interquartil:
+\begin{equation}
+IQR=Q_3-Q_1=4.681-2.105{,}5=2.575{,}5.
+\end{equation}
+Aplicando a regra de $1{,}5\,IQR$, obtêm-se
+\begin{align}
+L_{\mathrm{inf}}&=Q_1-1{,}5\,IQR=-1.757{,}75,\\
+L_{\mathrm{sup}}&=Q_3+1{,}5\,IQR=8.544{,}25.
+\end{align}
+Um valor inferior ao primeiro limite ou superior ao segundo seria marcado
+como potencialmente atípico. Como o mínimo é 431 e o máximo é 6.043, nenhuma
+das 300 observações ultrapassa esses limites.
+
+\subsection{Conclusão da etapa}
+
+O primeiro quartil delimita a região dos menores valores e servirá de corte
+para a variável \texttt{low\_usage}. O IQR mostra uma diferença de 2.575,5
+usuários entre o primeiro e o terceiro quartis. Não há outliers segundo a
+regra de $1{,}5\,IQR$ na distribuição global. Isso não significa que todos
+os dias tenham demandas semelhantes nem permite concluir, por si só, que a
+demanda seja previsível.
+
+\section{Histograma e boxplot (etapa 2.4)}
+
+\subsection{Construção e leitura do histograma}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.72\textwidth]{histogramaq2.png}
+\caption{Histograma de densidade de \texttt{total\_user} fornecido para a etapa 2.4.}
+\label{fig:hist}
+\end{figure}
+
+Com os 300 totais diários, construiu-se um histograma de densidade: o eixo
+horizontal representa usuários por dia, e o vertical representa densidade,
+não quantidade absoluta de dias. Cada barra reúne valores em uma faixa de
+utilização. Na Figura~\ref{fig:hist}, observam-se concentrações aproximadas
+nas faixas de 1.500 a 2.000 e de 4.500 a 5.000 usuários. A aparência de
+dois agrupamentos é descritiva e pode variar com a largura das classes; sua
+causa não pode ser determinada apenas pelo histograma.
+
+\subsection{Construção e leitura do boxplot}
+
+O boxplot resume os mesmos dados com uma caixa entre $Q_1$ e $Q_3$, uma
+linha na mediana e hastes que alcançam os extremos não classificados como
+outliers pela regra de $1{,}5\,IQR$. A Figura~\ref{fig:box} mostra mediana
+mais próxima de $Q_3$ do que de $Q_1$, bem como maior extensão da parte
+inferior da caixa. Não se veem pontos fora das hastes, em concordância com
+os limites calculados na etapa 2.3.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.74\textwidth]{boxplotq2.png}
+\caption{Boxplot de \texttt{total\_user} fornecido para a etapa 2.4.}
+\label{fig:box}
+\end{figure}
+
+\subsection{Conclusão da etapa}
+
+Os gráficos se complementam. O histograma permite observar onde os valores
+se concentram e sugere dois grupos de intensidade de uso. O boxplot evidencia
+os quartis, a amplitude e a ausência de observações atípicas sob a regra
+adotada. Nenhum dos dois gráficos, sem comparações adicionais, demonstra que
+as diferenças sejam causadas por estação do ano, clima ou tipo de dia.
+
+\section{Criação da variável de baixa utilização (etapa 2.5)}
+\vspace{0.35em}
+
+\subsection{Definição e implementação}
+
+Tomou-se o primeiro quartil da distribuição global de
+\texttt{total\_user} como limiar. Para cada dia $i$, definiu-se
+\begin{equation}
+\texttt{low\_usage}_i=
+\begin{cases}
+1,&\texttt{total\_user}_i<2.105{,}5,\\
+0,&\texttt{total\_user}_i\geq 2.105{,}5.
+\end{cases}
+\end{equation}
+Como \texttt{total\_user} é uma contagem inteira, o primeiro caso equivale
+a ter no máximo 2.105 usuários. Os dados originais não são alterados; apenas
+se acrescenta a nova coluna binária. O comando usado para reproduzir esse
+passo em R é:
+\begin{lstlisting}[language=R]
+Q1 <- quantile(dados$total_user, probs = 0.25, type = 7)
+dados$low_usage <- ifelse(dados$total_user < Q1, 1L, 0L)
+table(dados$low_usage)
+mean(dados$low_usage)
+\end{lstlisting}
+
+\subsection{Contagem e proporção}
+
+Após aplicar o corte às 300 linhas, 75 dias receberam valor 1 e 225 dias
+receberam valor 0. A proporção classificada como baixa utilização é
+\begin{equation}
+\widehat{p}=\frac{75}{300}=0{,}25=25\%.
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{Distribuição da variável \texttt{low\_usage}.}
+\begin{tabular}{lrr}
+\toprule
+Classificação & Dias & Proporção \\
+\midrule
+Baixa utilização (1) & 75 & 25\% \\
+Demais dias (0) & 225 & 75\% \\
+\midrule
+Total & 300 & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Conclusão da etapa}
+
+Na amostra estudada, baixa utilização significa pertencer ao grupo dos
+menores totais diários segundo o corte do primeiro quartil: menos de
+2.105,5 usuários. O resultado de 25\% decorre do critério relativo à
+distribuição do próprio grupo. Esses dias não são automaticamente outliers,
+nem se pode transportar o mesmo limiar para outro período sem reavaliar a
+comparabilidade dos dados.
+
+Em síntese, a média de \texttt{total\_user} foi 3.513,21, inferior à
+mediana de 3.996, e o corte em $Q_1$ identificou 75 dias de baixa demanda.
+O histograma sugere concentrações distintas de uso, sem que os gráficos ou
+os quartis permitam atribuir causas a esse padrão. Investigar possíveis
+associações com estação do ano, clima ou calendário exige análises
+específicas posteriores.
+
+\end{document}

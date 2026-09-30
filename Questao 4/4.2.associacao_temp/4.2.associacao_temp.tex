@@ -1,0 +1,33 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+
+\begin{document}
+
+\subsection*{4.2. Associação entre Temperatura e Utilização do Sistema}
+
+Para aprofundar a análise iniciada na Questão 3 a respeito do impacto térmico, selecionou-se a variável quantitativa contínua da temperatura (\texttt{temp}) para avaliar estatisticamente a sua associação com o volume diário de usuários (\texttt{total\_user}).
+
+Como ambas as variáveis são contínuas, a medida estatística adequada escolhida foi o \textbf{Coeficiente de Correlação de Pearson}. Esta métrica quantifica a força e a direção da relação linear entre os dados. Para a representação visual, optou-se por um gráfico de dispersão (\textit{scatter plot}) acrescido de uma reta de regressão linear para facilitar a observação da tendência.
+
+A execução do teste estatístico computacional resultou em um coeficiente de correlação de \textbf{0,8058}. O comportamento visual desta distribuição é apresentado na Figura \ref{fig:dispersao_temp}.
+
+\begin{figure}[H]
+    \centering
+    \caption{Associação linear entre temperatura e total de usuários diários.}
+    \vspace{0.1cm}
+    \includegraphics[width=0.8\textwidth]{4.2.grafico_dispersao_temp.png}
+    \\ \vspace{0.1cm}
+    \footnotesize{Fonte: Elaborado pelos autores (2026) com base nos dados de \texttt{2.1.total\_user.xlsx}.}
+    \label{fig:dispersao_temp}
+\end{figure}
+
+\textbf{Interpretação e Comparação com Resultados Anteriores}
+
+O valor obtido ($r \approx 0,81$) indica uma correlação linear positiva e de forte intensidade. Isso significa que há uma proporção direta bastante consistente: a elevação da temperatura está intimamente associada ao crescimento do número total de ciclistas no sistema.
+
+Este resultado fundamenta matematicamente as conclusões qualitativas obtidas na Questão 3. Naquela etapa, constatou-se que os dias com temperaturas mais agradáveis e quentes (como os meses centrais do ano, cujo ápice de uso ocorreu em julho) concentravam maiores volumes de demanda. O teste de Pearson comprova de forma contundente que esse comportamento não é apenas uma flutuação sazonal, mas sim uma tendência estatística robusta. A temperatura atua como um forte preditor do volume de aluguéis, validando plenamente as hipóteses levantadas na etapa anterior do estudo.
+
+\end{document}
