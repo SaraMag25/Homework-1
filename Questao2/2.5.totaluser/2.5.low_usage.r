@@ -1,7 +1,7 @@
 library(readxl)
 library(openxlsx)
 
-arquivo_entrada <- "2.1.total_user.xlsx"
+arquivo_entrada <- "../2.1.total_user/total_user.xlsx"
 arquivo_saida <- "2.5.low_usage.xlsx"
 
 dados <- read_excel(arquivo_entrada)

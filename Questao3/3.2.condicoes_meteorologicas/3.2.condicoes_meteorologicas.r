@@ -3,7 +3,7 @@ library(ggplot2)
 library(scales)
 library(readxl)
 
-dados <- read_excel("Questao2/2.1.total_user/2.1.total_user.xlsx")
+dados <- read_excel("Questao2/2.1.total_user/total_user.xlsx")
 limite_inferior <- quantile(dados$total_user, 0.25, na.rm = TRUE)
 
 dados <- dados %>%

@@ -1,5 +1,5 @@
 library(readxl)
-dados <- read_excel("Questao2/2.1.total_user/2.1.total_user.xlsx")
+dados <- read_excel("Questao2/2.1.total_user/total_user.xlsx")
 correlacao <- cor(dados$temp, dados$total_user, method = "pearson")
 
 cat("Coeficiente de Correlação de Pearson (Temperatura x Total Users):", round(correlacao, 4), "\n")

@@ -1,6 +1,6 @@
 library(readxl)
 
-arquivo <- "2.1.total_user.xlsx"
+arquivo <- "../2.1.total_user/total_user.xlsx"
 
 dados <- read_excel(arquivo)
 

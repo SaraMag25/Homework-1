@@ -1,5 +1,5 @@
 library(readxl)
-dados <- read_excel("Questao2/2.1.total_user/2.1.total_user.xlsx")
+dados <- read_excel("Questao2/2.1.total_user/total_user.xlsx")
 dados$weathersit <- as.factor(dados$weathersit)
 modelo_anova <- aov(total_user ~ weathersit, data = dados)
 

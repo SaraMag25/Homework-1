@@ -1,4 +1,4 @@
-source("2.1.total_user.R")
+source("../Questao2/2.1.total_user/2.1.total_user.r")
 
 calcula_moda <- function(v) {
   frequencias <- table(v)

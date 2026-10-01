@@ -1,5 +1,5 @@
 library(readxl)
-ficheiro <- "Questao2/2.1.total_user.xlsx"
+ficheiro <- "Questao2/2.1.total_user/total_user.xlsx"
 dados <- read_excel(ficheiro)
 dados_ordenados <- sort(dados$total_user)
 quartis <- quantile(dados_ordenados, probs = c(0.25, 0.50, 0.75))

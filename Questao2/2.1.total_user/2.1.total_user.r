@@ -1,7 +1,7 @@
 library(readxl)
 library(openxlsx)
 
-arquivo_entrada <- "../Questao1/data_group.xlsx"
+arquivo_entrada <- "../Questao1/1.2.data_group/data_group.xlsx"
 arquivo_saida <- "total_user.xlsx"
 
 if (!file.exists(arquivo_entrada)) {
