@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,oneside,a4paper,english,brazil]{abntex2}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -12,36 +12,42 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{setspace}
-\usepackage{titlesec}
-\usepackage{fancyhdr}
 \usepackage{xcolor}
 \usepackage{colortbl}
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage{caption}
-\usepackage[hidelinks]{hyperref}
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\hypersetup{hidelinks}
 
-\onehalfspacing
+% Formatação geral conforme ABNT NBR 14724
 \setlength{\parindent}{1.25cm}
-\setlength{\parskip}{0.15cm}
+\setlength{\parskip}{0pt}
+\OnehalfSpacing
 \renewcommand{\arraystretch}{1.15}
+\setlength{\beforechapskip}{-10pt}
+\setlength{\afterchapskip}{18pt}
 
-\definecolor{azulescuro}{RGB}{112,78,150}
-\definecolor{azulclaro}{RGB}{238,230,248}
+\definecolor{lilasescuro}{RGB}{112,78,150}
+\definecolor{lilasclaro}{RGB}{238,230,248}
 \definecolor{cinzaclaro}{RGB}{245,245,245}
-\definecolor{verdeclaro}{RGB}{226,239,218}
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{TI0111 -- Statistics for Engineers}
-\fancyhead[R]{Homework 1}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
+% Títulos primários e secundários
+\renewcommand{\ABNTEXchapterfont}{\normalfont\bfseries\color{lilasescuro}}
+\renewcommand{\ABNTEXchapterfontsize}{\fontsize{14}{17}\selectfont}
+\renewcommand{\ABNTEXsectionfont}{\normalfont\bfseries}
+\renewcommand{\ABNTEXsectionfontsize}{\fontsize{12.5}{15}\selectfont}
+\renewcommand{\ABNTEXsubsectionfont}{\normalfont\bfseries}
+\renewcommand{\ABNTEXsubsectionfontsize}{\normalsize}
 
-\titleformat{\section}{\normalfont\fontsize{14}{17}\selectfont\bfseries\color{azulescuro}}{\thesection.}{0.7em}{}
-\titleformat{\subsection}{\normalfont\fontsize{12.5}{15}\selectfont\bfseries}{\thesubsection.}{0.7em}{}
-\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection.}{0.7em}{}
+% Paginação no canto superior direito a partir da parte textual
+\makepagestyle{abntmain}
+\makeoddhead{abntmain}{}{}{\thepage}
+\makeevenhead{abntmain}{\thepage}{}{}
+\makeoddfoot{abntmain}{}{}{}
+\makeevenfoot{abntmain}{}{}{}
+
+\captionsetup{font=small,labelfont=bf,justification=centering,singlelinecheck=false}
 
 \lstset{
   basicstyle=\ttfamily\footnotesize,
@@ -50,51 +56,93 @@
   breaklines=true,
   columns=fullflexible,
   showstringspaces=false,
-  keywordstyle=\bfseries\color{azulescuro},
+  keywordstyle=\bfseries\color{lilasescuro},
   commentstyle=\itshape,
   literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
            {ã}{{\~a}}1 {õ}{{\~o}}1 {ç}{{\c c}}1 {Á}{{\'A}}1 {É}{{\'E}}1
 }
 
 \begin{document}
+\pretextual
+\pagestyle{empty}
 
-\begin{titlepage}
-\centering
-\vspace*{2cm}
-{\Large\bfseries TI0111 -- Statistics for Engineers\par}
-\vspace{1.2cm}
-{\Huge\bfseries Relatório Final -- Homework 1\par}
-\vspace{0.4cm}
-{\Large Análise Estatística de um Sistema de Compartilhamento de Bicicletas\par}
-\vspace{1cm}
-\rule{0.85\textwidth}{0.7pt}
-\vspace{1.2cm}
-
-{\large\bfseries Equipe\par}
-\vspace{0.4cm}
-Allan Martins Gadelha -- 579087\\
-Clarisse Maria Cabral Montenegro -- 580585\\
-Maria Luisa Fernandes de Mendonça -- 581706\\
-Sara de Sousa Magalhães -- 581189
-
-\vspace{1.2cm}
-{\large\bfseries\color{azulescuro} Repositórios do trabalho\par}
+\begin{capa}
+\begin{center}
+{\large\bfseries UNIVERSIDADE FEDERAL DO CEARÁ\par}
 \vspace{0.25cm}
-{\small GitHub: \href{https://github.com/SaraMag25/Homework-1}{\texttt{github.com/SaraMag25/Homework-1}}\par}
+{\large TI0111 -- Statistics for Engineers\par}
+
+\vspace{2.8cm}
+{\large Allan Martins Gadelha -- 579087\par}
+{\large Clarisse Maria Cabral Montenegro -- 580585\par}
+{\large Maria Luisa Fernandes de Mendonça -- 581706\par}
+{\large Sara de Sousa Magalhães -- 581189\par}
+
+\vfill
+{\Large\bfseries RELATÓRIO FINAL -- HOMEWORK 1\par}
+\vspace{0.35cm}
+{\large\bfseries Análise Estatística de um Sistema de Compartilhamento de Bicicletas\par}
+
+\vfill
+{\small\bfseries\color{lilasescuro} Recursos digitais do projeto\par}
 \vspace{0.15cm}
+{\small GitHub: \href{https://github.com/SaraMag25/Homework-1}{\texttt{github.com/SaraMag25/Homework-1}}\par}
 {\small Google Drive: \href{https://drive.google.com/drive/folders/1jq3fmuYgX59cN8P8pv3AWH5V_lezF6Zc?usp=drive_link}{\texttt{Pasta do projeto no Google Drive}}\par}
 
 \vfill
+{\large Fortaleza\par}
 {\large 2026\par}
-\end{titlepage}
+\end{center}
+\end{capa}
 
-\tableofcontents
-\newpage
-\listoffigures
-\listoftables
-\newpage
+\begin{folhaderosto}
+\begin{center}
+{\large Allan Martins Gadelha\par}
+{\large Clarisse Maria Cabral Montenegro\par}
+{\large Maria Luisa Fernandes de Mendonça\par}
+{\large Sara de Sousa Magalhães\par}
 
-\section{Introdução}
+\vfill
+{\Large\bfseries RELATÓRIO FINAL -- HOMEWORK 1\par}
+\vspace{0.35cm}
+{\large\bfseries Análise Estatística de um Sistema de Compartilhamento de Bicicletas\par}
+
+\vfill
+\hspace{0.45\textwidth}
+\begin{minipage}{0.50\textwidth}
+\SingleSpacing
+Relatório final apresentado à disciplina TI0111 -- Statistics for Engineers, da Universidade Federal do Ceará, como parte das atividades avaliativas do Homework 1.
+\end{minipage}
+
+\vfill
+{\large Fortaleza\par}
+{\large 2026\par}
+\end{center}
+\end{folhaderosto}
+
+\begin{resumo}
+Este relatório apresenta a construção, exploração e análise estatística de uma amostra com 300 observações diárias de um sistema de compartilhamento de bicicletas. O trabalho abrange a definição da amostra, validação manual de medidas estatísticas, análise descritiva, identificação de baixa utilização, comparação por estação e condição meteorológica, estudo da relação entre temperatura e demanda, análise temporal e aprofundamentos com regressão e análise de variância. Os procedimentos foram desenvolvidos em R, com apoio de pacotes para manipulação de dados, visualização e leitura e escrita de planilhas, e documentados em LaTeX. Os resultados indicam associação positiva entre temperatura e utilização, forte concentração de dias de baixa utilização no inverno e redução do uso sob condições meteorológicas desfavoráveis.
+
+\vspace{\onelineskip}
+\noindent\textbf{Palavras-chave}: estatística descritiva. R. compartilhamento de bicicletas. análise exploratória. série temporal.
+\end{resumo}
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+
+\textual
+\pagestyle{abntmain}
+\aliaspagestyle{chapter}{abntmain}
+\chapter{Introdução}
 
 Este relatório consolida o desenvolvimento completo do Homework 1 da disciplina TI0111 -- Statistics for Engineers. O trabalho teve como objetivo aplicar conceitos de estatística descritiva e análise exploratória a um conjunto de dados real referente ao uso diário de um sistema de compartilhamento de bicicletas em uma cidade dos Estados Unidos.
 
@@ -106,9 +154,9 @@ Dessa forma, foram selecionadas 300 observações consecutivas, dos índices 7 a
 
 O projeto foi desenvolvido de forma modular, com scripts em R, relatórios em LaTeX, arquivos intermediários em Excel e gráficos gerados em PNG. O versionamento e a colaboração foram organizados por Git e GitHub, enquanto RStudio e VS Code foram utilizados na execução e desenvolvimento dos scripts. A redação final e a organização acadêmica foram conduzidas em LaTeX/Overleaf.
 
-\section{Organização dos dados e construção da amostra -- Questão 1}
+\chapter{Organização dos dados e construção da amostra -- Questão 1}
 
-\subsection{Estrutura da amostra}
+\section{Estrutura da amostra}
 
 A amostra contém as variáveis \texttt{instant}, \texttt{dteday}, \texttt{season}, \texttt{weathersit}, \texttt{temp}, \texttt{casual} e \texttt{registered}. A variável derivada \texttt{total\_user} foi criada posteriormente pela soma
 \begin{equation}
@@ -122,7 +170,7 @@ No R, a base foi estruturada com \texttt{read.csv()}, convertida para os tipos a
 \caption{Resumo da amostra específica do grupo.}
 \begin{tabular}{lc}
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Informação} & \textbf{Resultado} \\
 \midrule
 Maior matrícula ($M$) & 581706 \\
@@ -136,7 +184,7 @@ Primeira data & 07/01/2011 \\
 \end{tabular}
 \end{table}
 
-\subsection{Verificação manual com as primeiras 10 observações}
+\section{Verificação manual com as primeiras 10 observações}
 
 Como etapa de validação, as primeiras dez observações foram utilizadas para calcular manualmente média, mediana, moda, variância, desvio padrão e quartis de \texttt{total\_user}. Os principais resultados foram:
 
@@ -145,7 +193,7 @@ Como etapa de validação, as primeiras dez observações foram utilizadas para 
 \caption{Resultados manuais e verificação no R para as dez primeiras observações.}
 \begin{tabular}{lcc}
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Medida} & \textbf{Cálculo manual} & \textbf{R} \\
 \midrule
 Média & 1231,60 & 1231,60 \\
@@ -162,22 +210,22 @@ IQR & 298,50 & 212,25 \\
 
 As medidas de tendência central e dispersão coincidiram entre o cálculo manual e o R. A diferença nos quartis decorre do método de interpolação: o cálculo manual utilizou posições baseadas em $(n+1)$, enquanto o R emprega por padrão o método \texttt{type = 7} em \texttt{quantile()}. A partir desse ponto, o método do R foi adotado como padrão para manter consistência ao longo do projeto.
 
-\section{Caracterização e análise descritiva -- Questão 2}
+\chapter{Caracterização e análise descritiva -- Questão 2}
 
-\subsection{Classificação das variáveis e integridade dos dados}
+\section{Classificação das variáveis e integridade dos dados}
 
 A análise inicial confirmou a ausência de valores faltantes nas 300 observações. As variáveis \texttt{season} e \texttt{weathersit} foram tratadas como categóricas; \texttt{temp} como quantitativa contínua; e \texttt{casual}, \texttt{registered} e \texttt{total\_user} como contagens discretas. A variável \texttt{instant} funciona como identificador sequencial e \texttt{dteday} como referência temporal.
 
 Foram observados 73 dias de inverno, 92 de primavera, 94 de verão e 41 de outono. Quanto às condições meteorológicas, a amostra contém 184 dias de céu limpo, 106 dias nublados e 10 dias de chuva fraca; não houve observações classificadas como chuva forte no recorte utilizado.
 
-\subsection{Medidas de tendência central}
+\section{Medidas de tendência central}
 
 \begin{table}[H]
 \centering
 \caption{Medidas de tendência central nas 300 observações.}
 \begin{tabular}{lrrp{5.2cm}}
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Variável} & \textbf{Média} & \textbf{Mediana} & \textbf{Moda} \\
 \midrule
 \texttt{temp} & 21,15 & 22,2 & 26,0 (6 ocorrências) \\
@@ -190,7 +238,7 @@ Foram observados 73 dias de inverno, 92 de primavera, 94 de verão e 41 de outon
 
 Os usuários registrados constituem a maior parcela da utilização do sistema. Para \texttt{total\_user}, a mediana superior à média indica que dias de utilização mais baixa reduzem a média global. A moda possui baixa capacidade descritiva para \texttt{registered} e \texttt{total\_user}, já que diversos valores empatam com frequências pequenas.
 
-\subsection{Quartis, IQR e valores atípicos}
+\section{Quartis, IQR e valores atípicos}
 
 Para \texttt{total\_user}, foram obtidos:
 \begin{equation}
@@ -205,7 +253,7 @@ L_{inf}=-1757{,}75,\qquad L_{sup}=8544{,}25.
 \end{equation}
 Como o mínimo da amostra é 431 e o máximo é 6043, nenhuma das 300 observações foi classificada como outlier por esse critério global.
 
-\subsection{Histograma e boxplot}
+\section{Histograma e boxplot}
 
 \begin{figure}[H]
 \centering
@@ -223,7 +271,7 @@ O histograma evidencia concentrações de observações em faixas distintas de u
 
 O boxplot confirma a posição dos quartis e a ausência de pontos além dos limites definidos pela regra de $1{,}5\,IQR$.
 
-\subsection{Definição de baixa utilização}
+\section{Definição de baixa utilização}
 
 Foi criada a variável binária \texttt{low\_usage} com base em $Q_1$:
 \begin{equation}
@@ -235,9 +283,9 @@ Foi criada a variável binária \texttt{low\_usage} com base em $Q_1$:
 \end{equation}
 Foram classificados 75 dias como baixa utilização e 225 como demais dias, correspondendo exatamente a 25\% e 75\% da amostra, respectivamente.
 
-\section{Associações com estação, clima e temperatura -- Questão 3}
+\chapter{Associações com estação, clima e temperatura -- Questão 3}
 
-\subsection{Utilização por estação do ano}
+\section{Utilização por estação do ano}
 
 \begin{table}[H]
 \centering
@@ -245,7 +293,7 @@ Foram classificados 75 dias como baixa utilização e 225 como demais dias, corr
 \caption{Estatísticas de utilização por estação.}
 \begin{tabular}{lrrrrrr}
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Estação} & $n$ & \textbf{Média} & \textbf{Mediana} & \textbf{DP} & \textbf{Dias low} & \textbf{Proporção} \\
 \midrule
 Inverno & 73 & 1639,82 & 1605,0 & 575,69 & 60 & 82,19\% \\
@@ -264,14 +312,14 @@ O inverno apresentou os menores níveis de utilização e concentrou 60 dos 75 d
 \caption{Distribuição do total diário de usuários por estação do ano.}
 \end{figure}
 
-\subsection{Condições meteorológicas}
+\section{Condições meteorológicas}
 
 \begin{table}[H]
 \centering
 \caption{Utilização por condição meteorológica.}
 \begin{tabular}{lrrrrr}
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Condição} & \textbf{Média} & \textbf{DP} & \textbf{Dias} & \textbf{Dias low} & \textbf{Proporção} \\
 \midrule
 Céu limpo & 3851 & 1360 & 184 & 33 & 17,9\% \\
@@ -295,7 +343,7 @@ A frequência de baixa utilização cresce com a piora das condições meteorol�
 \caption{Proporção de dias de baixa utilização por condição meteorológica.}
 \end{figure}
 
-\subsection{Temperatura e total de usuários}
+\section{Temperatura e total de usuários}
 
 O coeficiente de correlação de Pearson entre \texttt{temp} e \texttt{total\_user} foi
 \begin{equation}
@@ -311,9 +359,9 @@ indicando associação linear positiva forte no conjunto analisado. A interpreta
 
 O relatório consolidado da Questão 3 destacou temperatura e estação do ano como as duas características mais associadas à utilização. Na implementação posterior da Questão 4, entretanto, o aprofundamento comparativo utilizou temperatura e condições meteorológicas. Este relatório registra essa evolução do foco analítico sem alterar os resultados originais de cada etapa.
 
-\section{Aprofundamento conjunto das análises -- Questão 4}
+\chapter{Aprofundamento conjunto das análises -- Questão 4}
 
-\subsection{Série temporal}
+\section{Série temporal}
 
 A série temporal revela crescimento acentuado da utilização ao longo dos primeiros meses, seguido de patamar elevado e maior variabilidade entre agosto e outubro. O menor valor ocorreu em 27/01/2011, com 431 usuários, e o maior em 04/07/2011, com 6043 usuários.
 
@@ -325,7 +373,7 @@ A série temporal revela crescimento acentuado da utilização ao longo dos prim
 
 Entre janeiro e fevereiro predominam valores menores. Março e abril caracterizam uma fase de crescimento, enquanto maio a julho concentram níveis frequentemente superiores a 4000 usuários. Após julho, a utilização permanece elevada, porém com oscilações mais intensas.
 
-\subsection{Aprofundamento da associação com temperatura}
+\section{Aprofundamento da associação com temperatura}
 
 A correlação de Pearson foi recalculada e manteve o valor aproximado de $0{,}8058$. Uma regressão linear descritiva foi sobreposta ao gráfico de dispersão para evidenciar a tendência geral.
 
@@ -335,7 +383,7 @@ A correlação de Pearson foi recalculada e manteve o valor aproximado de $0{,}8
 \caption{Dispersão entre temperatura e utilização com tendência linear.}
 \end{figure}
 
-\subsection{Condições meteorológicas e ANOVA}
+\section{Condições meteorológicas e ANOVA}
 
 Para comparar o total de usuários entre as categorias de \texttt{weathersit}, foi aplicado um modelo de análise de variância de uma via:
 \begin{equation}
@@ -349,7 +397,7 @@ O teste apresentou $p\approx2{,}13\times10^{-9}$, indicando diferenças estatist
 \caption{Comparação do total de usuários entre condições meteorológicas.}
 \end{figure}
 
-\subsection{Temperatura, baixa utilização e comparação entre grupos}
+\section{Temperatura, baixa utilização e comparação entre grupos}
 
 O script final da Questão 4 incorporou uma rotina robusta para interpretar a escala de \texttt{temp}. Caso os valores estejam entre 0 e 1, a temperatura é convertida por $T_C=41T_{norm}$; se já estiverem em intervalo compatível com graus Celsius, os valores são preservados.
 
@@ -360,7 +408,7 @@ A separação por \texttt{low\_usage} mostrou que os dias de baixa utilização 
 \caption{Temperatura e correlação de Pearson por grupo de utilização.}
 \begin{tabular}{lrrrr}
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Grupo} & \textbf{Dias} & \textbf{Temp. média} & \textbf{Intervalo de temp.} & $r(T,U)$ \\
 \midrule
 Baixa utilização & 75 & 11,08 $^\circ$C & 2,4--27,9 $^\circ$C & 0,277 \\
@@ -383,7 +431,7 @@ Demais dias & 225 & 24,50 $^\circ$C & 10,8--34,8 $^\circ$C & 0,568 \\
 
 A comparação entre grupos deve ser interpretada com cuidado, pois \texttt{low\_usage} é definida a partir da própria variável \texttt{total\_user}. Assim, a separação restringe diretamente o intervalo da variável resposta e pode alterar correlações e inclinações sem representar efeitos causais distintos.
 
-\section{Funções, pacotes e recursos adicionais utilizados no R}
+\chapter{Funções, pacotes e recursos adicionais utilizados no R}
 
 Ao longo do projeto foi necessário ir além das operações estatísticas básicas. A Tabela~\ref{tab:funcoesR} resume os principais pacotes e funções efetivamente empregados nos scripts do repositório.
 
@@ -391,12 +439,12 @@ Ao longo do projeto foi necessário ir além das operações estatísticas bási
 \begin{longtable}{p{3.2cm}p{4.2cm}p{7.1cm}}
 \caption{Principais recursos adicionais de R utilizados no projeto.}\label{tab:funcoesR}\\
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Pacote/área} & \textbf{Função ou recurso} & \textbf{Finalidade no projeto} \\
 \midrule
 \endfirsthead
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Pacote/área} & \textbf{Função ou recurso} & \textbf{Finalidade no projeto} \\
 \midrule
 \endhead
@@ -433,7 +481,7 @@ Base R & \texttt{range()}, \texttt{seq()}, \texttt{sprintf()} & Definição de l
 \end{longtable}
 \normalsize
 
-\subsection{Função personalizada para a moda}
+\section{Função personalizada para a moda}
 
 A necessidade de lidar com distribuições amodais ou multimodais levou à criação de uma função própria. Ela conta as frequências com \texttt{table()}, encontra a maior frequência e devolve todos os valores empatados ou a indicação de conjunto amodal:
 
@@ -450,13 +498,13 @@ calcula_moda <- function(v) {
 }
 \end{lstlisting}
 
-\subsection{Boas práticas de robustez incorporadas}
+\section{Boas práticas de robustez incorporadas}
 
 Além dos cálculos, os scripts incluíram verificações de integridade e rotinas de execução mais robustas. Entre elas, destacam-se a validação da existência de arquivos antes da leitura, a verificação de colunas obrigatórias, o controle do número de observações com \texttt{stopifnot()}, o uso de \texttt{anyNA()} para detectar ausências, a criação automática de diretórios de saída e a detecção da escala de temperatura antes de convertê-la para graus Celsius.
 
 Esses recursos não alteram a teoria estatística utilizada, mas tornam o código mais seguro, reproduzível e reutilizável.
 
-\section{Fluxo de trabalho e ferramentas de desenvolvimento}
+\chapter{Fluxo de trabalho e ferramentas de desenvolvimento}
 
 O projeto foi organizado de forma colaborativa e modular. As principais ferramentas foram:
 
@@ -472,11 +520,11 @@ O projeto foi organizado de forma colaborativa e modular. As principais ferramen
 A organização por questão permitiu manter scripts, documentos e imagens próximos de suas respectivas análises, reduzindo ambiguidade sobre a origem de cada resultado.
 
 
-\section{Contribuições da equipe}
+\chapter{Contribuições da equipe}
 
 O trabalho foi desenvolvido de forma colaborativa, com divisão das etapas entre os quatro integrantes e integração contínua pelo GitHub. A síntese abaixo foi organizada a partir das atividades registradas no histórico do repositório e dos arquivos finais produzidos em cada questão. Como houve revisões, reorganizações e integração entre diferentes etapas, as contribuições são apresentadas como principais responsabilidades registradas, sem pressupor exclusividade sobre cada arquivo.
 
-\subsection{Allan Martins Gadelha -- 579087}
+\section{Allan Martins Gadelha -- 579087}
 
 As principais contribuições de Allan concentraram-se no processamento da base e em análises estatísticas e sazonais. Entre as atividades registradas, destacam-se:
 
@@ -488,7 +536,7 @@ As principais contribuições de Allan concentraram-se no processamento da base 
 \item participação na consolidação da Questão 2 e em análises adicionais relacionadas à temperatura e ao comportamento do sistema.
 \end{itemize}
 
-\subsection{Clarisse Maria Cabral Montenegro -- 580585}
+\section{Clarisse Maria Cabral Montenegro -- 580585}
 
 Clarisse atuou principalmente na construção e validação inicial da amostra, em análises descritivas e na série temporal. Suas principais contribuições registradas foram:
 
@@ -502,7 +550,7 @@ Clarisse atuou principalmente na construção e validação inicial da amostra, 
 \item revisão da estrutura e organização final do repositório.
 \end{itemize}
 
-\subsection{Maria Luisa Fernandes de Mendonça -- 581706}
+\section{Maria Luisa Fernandes de Mendonça -- 581706}
 
 Maria Luisa contribuiu especialmente para a produção de visualizações, organização dos materiais e consolidação dos relatórios das etapas finais. Entre as principais atividades registradas estão:
 
@@ -516,7 +564,7 @@ Maria Luisa contribuiu especialmente para a produção de visualizações, organ
 \item preparação e organização do conjunto de imagens finais do projeto.
 \end{itemize}
 
-\subsection{Sara de Sousa Magalhães -- 581189}
+\section{Sara de Sousa Magalhães -- 581189}
 
 Sara teve participação importante na estruturação do repositório, nos cálculos de quartis e nas análises de clima e associação estatística. Suas principais contribuições registradas incluem:
 
@@ -530,18 +578,18 @@ Sara teve participação importante na estruturação do repositório, nos cálc
 \item realização de integrações e merges entre as contribuições dos diferentes integrantes e manutenção da organização do repositório.
 \end{itemize}
 
-\subsection{Trabalho colaborativo}
+\section{Trabalho colaborativo}
 
 Além das tarefas individuais, o desenvolvimento exigiu integração frequente entre as partes. Os integrantes compartilharam bases intermediárias, revisaram resultados produzidos por colegas, ajustaram caminhos de arquivos, reorganizaram diretórios e consolidaram documentos em LaTeX. O uso do Git e do GitHub permitiu registrar essas etapas e manter um histórico das alterações realizadas ao longo do projeto.
 
-\section{Síntese dos principais resultados}
+\chapter{Síntese dos principais resultados}
 
 \begin{table}[H]
 \centering
 \caption{Síntese dos resultados centrais do projeto.}
 \begin{tabularx}{\textwidth}{p{4.2cm}X}
 \toprule
-\rowcolor{azulclaro}
+\rowcolor{lilasclaro}
 \textbf{Resultado} & \textbf{Síntese} \\
 \midrule
 Amostra & 300 dias consecutivos, 07/01/2011 a 02/11/2011. \\
@@ -561,7 +609,7 @@ Correlação por grupo & $r\approx0{,}277$ em low usage e $r\approx0{,}568$ nos 
 \end{tabularx}
 \end{table}
 
-\section{Conclusão final do projeto}
+\chapter{Conclusão final do projeto}
 
 O desenvolvimento do Homework 1 permitiu percorrer um fluxo completo de análise estatística: seleção e validação da amostra, verificação manual dos cálculos, caracterização das variáveis, construção de medidas descritivas, identificação de quartis, criação de uma variável derivada de baixa utilização, produção de visualizações e investigação de associações entre fatores ambientais e a demanda do sistema.
 
@@ -571,4 +619,6 @@ Do ponto de vista computacional, o trabalho também consolidou habilidades de ma
 
 Por fim, o projeto reforçou a necessidade de distinguir associação de causalidade. Correlações elevadas e diferenças estatisticamente significativas entre grupos fornecem evidências relevantes sobre o comportamento da demanda, mas devem ser interpretadas no contexto do conjunto de dados e das limitações do desenho observacional.
 
+
+\postextual
 \end{document}
