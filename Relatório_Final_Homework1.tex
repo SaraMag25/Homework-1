@@ -1,0 +1,572 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{mathptmx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.15cm}
+\renewcommand{\arraystretch}{1.15}
+
+\definecolor{azulescuro}{RGB}{112,78,150}
+\definecolor{azulclaro}{RGB}{238,230,248}
+\definecolor{cinzaclaro}{RGB}{245,245,245}
+\definecolor{verdeclaro}{RGB}{226,239,218}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{TI0111 -- Statistics for Engineers}
+\fancyhead[R]{Homework 1}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\titleformat{\section}{\normalfont\fontsize{14}{17}\selectfont\bfseries\color{azulescuro}}{\thesection.}{0.7em}{}
+\titleformat{\subsection}{\normalfont\fontsize{12.5}{15}\selectfont\bfseries}{\thesubsection.}{0.7em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection.}{0.7em}{}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{cinzaclaro},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  keywordstyle=\bfseries\color{azulescuro},
+  commentstyle=\itshape,
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+           {ã}{{\~a}}1 {õ}{{\~o}}1 {ç}{{\c c}}1 {Á}{{\'A}}1 {É}{{\'E}}1
+}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\Large\bfseries TI0111 -- Statistics for Engineers\par}
+\vspace{1.2cm}
+{\Huge\bfseries Relatório Final -- Homework 1\par}
+\vspace{0.4cm}
+{\Large Análise Estatística de um Sistema de Compartilhamento de Bicicletas\par}
+\vspace{1cm}
+\rule{0.85\textwidth}{0.7pt}
+\vspace{1.2cm}
+
+{\large\bfseries Equipe\par}
+\vspace{0.4cm}
+Allan Martins Gadelha -- 579087\\
+Clarisse Maria Cabral Montenegro -- 580585\\
+Maria Luisa Fernandes de Mendonça -- 581706\\
+Sara de Sousa Magalhães -- 581189
+
+\vspace{1.2cm}
+{\large\bfseries\color{azulescuro} Repositório do trabalho\par}
+\vspace{0.25cm}
+{\small\href{https://github.com/SaraMag25/Homework-1}{\texttt{github.com/SaraMag25/Homework-1}}\par}
+
+\vfill
+{\large 2026\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+\newpage
+
+\section{Introdução}
+
+Este relatório consolida o desenvolvimento completo do Homework 1 da disciplina TI0111 -- Statistics for Engineers. O trabalho teve como objetivo aplicar conceitos de estatística descritiva e análise exploratória a um conjunto de dados real referente ao uso diário de um sistema de compartilhamento de bicicletas em uma cidade dos Estados Unidos.
+
+O conjunto original possui 731 observações diárias. A partir da maior matrícula da equipe, $M=581706$, foi calculado o índice inicial da amostra:
+\begin{equation}
+r = 1 + (M \bmod 100)=7.
+\end{equation}
+Dessa forma, foram selecionadas 300 observações consecutivas, dos índices 7 a 306, correspondentes ao período de 07/01/2011 a 02/11/2011. Todas as análises subsequentes foram realizadas sobre essa mesma amostra, preservando sua ordem original.
+
+O projeto foi desenvolvido de forma modular, com scripts em R, relatórios em LaTeX, arquivos intermediários em Excel e gráficos gerados em PNG. O versionamento e a colaboração foram organizados por Git e GitHub, enquanto RStudio e VS Code foram utilizados na execução e desenvolvimento dos scripts. A redação final e a organização acadêmica foram conduzidas em LaTeX/Overleaf.
+
+\section{Organização dos dados e construção da amostra -- Questão 1}
+
+\subsection{Estrutura da amostra}
+
+A amostra contém as variáveis \texttt{instant}, \texttt{dteday}, \texttt{season}, \texttt{weathersit}, \texttt{temp}, \texttt{casual} e \texttt{registered}. A variável derivada \texttt{total\_user} foi criada posteriormente pela soma
+\begin{equation}
+\texttt{total\_user}=\texttt{casual}+\texttt{registered}.
+\end{equation}
+
+No R, a base foi estruturada com \texttt{read.csv()}, convertida para os tipos adequados com funções como \texttt{as.Date()}, \texttt{as.integer()} e \texttt{as.numeric()}, e validada com \texttt{stopifnot()}. Também foi utilizado o pacote \texttt{openxlsx} para exportação em formato Excel.
+
+\begin{table}[H]
+\centering
+\caption{Resumo da amostra específica do grupo.}
+\begin{tabular}{lc}
+\toprule
+\rowcolor{azulclaro}
+\textbf{Informação} & \textbf{Resultado} \\
+\midrule
+Maior matrícula ($M$) & 581706 \\
+Índice inicial ($r$) & 7 \\
+Primeiro índice selecionado & 7 \\
+Último índice selecionado & 306 \\
+Número de observações & 300 \\
+Primeira data & 07/01/2011 \\
+Última data & 02/11/2011 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Verificação manual com as primeiras 10 observações}
+
+Como etapa de validação, as primeiras dez observações foram utilizadas para calcular manualmente média, mediana, moda, variância, desvio padrão e quartis de \texttt{total\_user}. Os principais resultados foram:
+
+\begin{table}[H]
+\centering
+\caption{Resultados manuais e verificação no R para as dez primeiras observações.}
+\begin{tabular}{lcc}
+\toprule
+\rowcolor{azulclaro}
+\textbf{Medida} & \textbf{Cálculo manual} & \textbf{R} \\
+\midrule
+Média & 1231,60 & 1231,60 \\
+Mediana & 1255,50 & 1255,50 \\
+Variância amostral & 44525,60 & 44525,60 \\
+Desvio padrão amostral & 211,01 & 211,01 \\
+$Q_1$ & 1111,25 & 1172,50 \\
+$Q_2$ & 1255,50 & 1255,50 \\
+$Q_3$ & 1409,75 & 1384,75 \\
+IQR & 298,50 & 212,25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As medidas de tendência central e dispersão coincidiram entre o cálculo manual e o R. A diferença nos quartis decorre do método de interpolação: o cálculo manual utilizou posições baseadas em $(n+1)$, enquanto o R emprega por padrão o método \texttt{type = 7} em \texttt{quantile()}. A partir desse ponto, o método do R foi adotado como padrão para manter consistência ao longo do projeto.
+
+\section{Caracterização e análise descritiva -- Questão 2}
+
+\subsection{Classificação das variáveis e integridade dos dados}
+
+A análise inicial confirmou a ausência de valores faltantes nas 300 observações. As variáveis \texttt{season} e \texttt{weathersit} foram tratadas como categóricas; \texttt{temp} como quantitativa contínua; e \texttt{casual}, \texttt{registered} e \texttt{total\_user} como contagens discretas. A variável \texttt{instant} funciona como identificador sequencial e \texttt{dteday} como referência temporal.
+
+Foram observados 73 dias de inverno, 92 de primavera, 94 de verão e 41 de outono. Quanto às condições meteorológicas, a amostra contém 184 dias de céu limpo, 106 dias nublados e 10 dias de chuva fraca; não houve observações classificadas como chuva forte no recorte utilizado.
+
+\subsection{Medidas de tendência central}
+
+\begin{table}[H]
+\centering
+\caption{Medidas de tendência central nas 300 observações.}
+\begin{tabular}{lrrp{5.2cm}}
+\toprule
+\rowcolor{azulclaro}
+\textbf{Variável} & \textbf{Média} & \textbf{Mediana} & \textbf{Moda} \\
+\midrule
+\texttt{temp} & 21,15 & 22,2 & 26,0 (6 ocorrências) \\
+\texttt{casual} & 743,77 & 673 & 639 (3 ocorrências) \\
+\texttt{registered} & 2769,45 & 3093 & 16 valores empatados, 2 ocorrências cada \\
+\texttt{total\_user} & 3513,21 & 3996 & 9 valores empatados, 2 ocorrências cada \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Os usuários registrados constituem a maior parcela da utilização do sistema. Para \texttt{total\_user}, a mediana superior à média indica que dias de utilização mais baixa reduzem a média global. A moda possui baixa capacidade descritiva para \texttt{registered} e \texttt{total\_user}, já que diversos valores empatam com frequências pequenas.
+
+\subsection{Quartis, IQR e valores atípicos}
+
+Para \texttt{total\_user}, foram obtidos:
+\begin{equation}
+Q_1=2105{,}5,\qquad Q_2=3996,\qquad Q_3=4681,
+\end{equation}
+\begin{equation}
+IQR=2575{,}5.
+\end{equation}
+Pela regra de $1{,}5\times IQR$, os limites foram
+\begin{equation}
+L_{inf}=-1757{,}75,\qquad L_{sup}=8544{,}25.
+\end{equation}
+Como o mínimo da amostra é 431 e o máximo é 6043, nenhuma das 300 observações foi classificada como outlier por esse critério global.
+
+\subsection{Histograma e boxplot}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{2.4.histogramaq2.png}
+\caption{Histograma da distribuição de \texttt{total\_user}.}
+\end{figure}
+
+O histograma evidencia concentrações de observações em faixas distintas de utilização. Essa estrutura sugere diferentes regimes de demanda ao longo do período, mas o gráfico isoladamente não permite determinar suas causas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.68\textwidth]{2.4.boxplotq2.png}
+\caption{Boxplot global de \texttt{total\_user}.}
+\end{figure}
+
+O boxplot confirma a posição dos quartis e a ausência de pontos além dos limites definidos pela regra de $1{,}5\,IQR$.
+
+\subsection{Definição de baixa utilização}
+
+Foi criada a variável binária \texttt{low\_usage} com base em $Q_1$:
+\begin{equation}
+\texttt{low\_usage}_i=
+\begin{cases}
+1,&\texttt{total\_user}_i<2105{,}5,\\
+0,&\texttt{total\_user}_i\geq2105{,}5.
+\end{cases}
+\end{equation}
+Foram classificados 75 dias como baixa utilização e 225 como demais dias, correspondendo exatamente a 25\% e 75\% da amostra, respectivamente.
+
+\section{Associações com estação, clima e temperatura -- Questão 3}
+
+\subsection{Utilização por estação do ano}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Estatísticas de utilização por estação.}
+\begin{tabular}{lrrrrrr}
+\toprule
+\rowcolor{azulclaro}
+\textbf{Estação} & $n$ & \textbf{Média} & \textbf{Mediana} & \textbf{DP} & \textbf{Dias low} & \textbf{Proporção} \\
+\midrule
+Inverno & 73 & 1639,82 & 1605,0 & 575,69 & 60 & 82,19\% \\
+Primavera & 92 & 3775,17 & 4085,5 & 1138,90 & 11 & 11,96\% \\
+Verão & 94 & 4464,36 & 4615,5 & 798,35 & 3 & 3,19\% \\
+Outono & 41 & 4080,27 & 4304,0 & 1054,78 & 1 & 2,44\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O inverno apresentou os menores níveis de utilização e concentrou 60 dos 75 dias de baixa utilização. O verão teve a maior média e mediana, enquanto a primavera apresentou o maior desvio padrão absoluto.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{boxplot_estacoes.png}
+\caption{Distribuição do total diário de usuários por estação do ano.}
+\end{figure}
+
+\subsection{Condições meteorológicas}
+
+\begin{table}[H]
+\centering
+\caption{Utilização por condição meteorológica.}
+\begin{tabular}{lrrrrr}
+\toprule
+\rowcolor{azulclaro}
+\textbf{Condição} & \textbf{Média} & \textbf{DP} & \textbf{Dias} & \textbf{Dias low} & \textbf{Proporção} \\
+\midrule
+Céu limpo & 3851 & 1360 & 184 & 33 & 17,9\% \\
+Nublado & 3110 & 1328 & 106 & 35 & 33,0\% \\
+Chuva fraca & 1562 & 852 & 10 & 7 & 70,0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A frequência de baixa utilização cresce com a piora das condições meteorológicas. Em dias de chuva fraca, 70\% das observações ficaram abaixo do primeiro quartil global, enquanto em dias de céu limpo essa proporção foi de 17,9\%.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{boxplot_clima.png}
+\caption{Distribuição de usuários por condição meteorológica.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{proporcao_low_usage.png}
+\caption{Proporção de dias de baixa utilização por condição meteorológica.}
+\end{figure}
+
+\subsection{Temperatura e total de usuários}
+
+O coeficiente de correlação de Pearson entre \texttt{temp} e \texttt{total\_user} foi
+\begin{equation}
+r\approx0{,}806,
+\end{equation}
+indicando associação linear positiva forte no conjunto analisado. A interpretação é associativa: o coeficiente não estabelece causalidade e não elimina a influência de estação do ano, clima ou outros fatores.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{3.3.grafico_temp_total_user.png}
+\caption{Relação entre temperatura e total diário de usuários.}
+\end{figure}
+
+O relatório consolidado da Questão 3 destacou temperatura e estação do ano como as duas características mais associadas à utilização. Na implementação posterior da Questão 4, entretanto, o aprofundamento comparativo utilizou temperatura e condições meteorológicas. Este relatório registra essa evolução do foco analítico sem alterar os resultados originais de cada etapa.
+
+\section{Aprofundamento conjunto das análises -- Questão 4}
+
+\subsection{Série temporal}
+
+A série temporal revela crescimento acentuado da utilização ao longo dos primeiros meses, seguido de patamar elevado e maior variabilidade entre agosto e outubro. O menor valor ocorreu em 27/01/2011, com 431 usuários, e o maior em 04/07/2011, com 6043 usuários.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{4.1.serie_temporal_total_user.png}
+\caption{Série temporal do total diário de usuários.}
+\end{figure}
+
+Entre janeiro e fevereiro predominam valores menores. Março e abril caracterizam uma fase de crescimento, enquanto maio a julho concentram níveis frequentemente superiores a 4000 usuários. Após julho, a utilização permanece elevada, porém com oscilações mais intensas.
+
+\subsection{Aprofundamento da associação com temperatura}
+
+A correlação de Pearson foi recalculada e manteve o valor aproximado de $0{,}8058$. Uma regressão linear descritiva foi sobreposta ao gráfico de dispersão para evidenciar a tendência geral.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.76\textwidth]{4.2.grafico_dispersao_temp.png}
+\caption{Dispersão entre temperatura e utilização com tendência linear.}
+\end{figure}
+
+\subsection{Condições meteorológicas e ANOVA}
+
+Para comparar o total de usuários entre as categorias de \texttt{weathersit}, foi aplicado um modelo de análise de variância de uma via:
+\begin{equation}
+\texttt{total\_user}\sim\texttt{weathersit}.
+\end{equation}
+O teste apresentou $p\approx2{,}13\times10^{-9}$, indicando diferenças estatisticamente significativas entre as médias dos grupos. Esse resultado confirma diferença entre condições meteorológicas, mas não deve ser interpretado isoladamente como prova de causalidade.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.74\textwidth]{4.3.boxplot_clima.png}
+\caption{Comparação do total de usuários entre condições meteorológicas.}
+\end{figure}
+
+\subsection{Temperatura, baixa utilização e comparação entre grupos}
+
+O script final da Questão 4 incorporou uma rotina robusta para interpretar a escala de \texttt{temp}. Caso os valores estejam entre 0 e 1, a temperatura é convertida por $T_C=41T_{norm}$; se já estiverem em intervalo compatível com graus Celsius, os valores são preservados.
+
+A separação por \texttt{low\_usage} mostrou que os dias de baixa utilização apresentam temperatura média de 11,08~$^\circ$C, contra 24,50~$^\circ$C nos demais dias. A correlação entre temperatura e uso foi positiva nos dois grupos, porém mais fraca entre os dias de baixa utilização:
+
+\begin{table}[H]
+\centering
+\caption{Temperatura e correlação de Pearson por grupo de utilização.}
+\begin{tabular}{lrrrr}
+\toprule
+\rowcolor{azulclaro}
+\textbf{Grupo} & \textbf{Dias} & \textbf{Temp. média} & \textbf{Intervalo de temp.} & $r(T,U)$ \\
+\midrule
+Baixa utilização & 75 & 11,08 $^\circ$C & 2,4--27,9 $^\circ$C & 0,277 \\
+Demais dias & 225 & 24,50 $^\circ$C & 10,8--34,8 $^\circ$C & 0,568 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{4.3.dispersao.png}
+\caption{Temperatura e utilização, com diferenciação dos dias de baixa utilização.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{4.3.paineis.png}
+\caption{Comparação visual entre os grupos de baixa utilização e demais dias.}
+\end{figure}
+
+A comparação entre grupos deve ser interpretada com cuidado, pois \texttt{low\_usage} é definida a partir da própria variável \texttt{total\_user}. Assim, a separação restringe diretamente o intervalo da variável resposta e pode alterar correlações e inclinações sem representar efeitos causais distintos.
+
+\section{Funções, pacotes e recursos adicionais utilizados no R}
+
+Ao longo do projeto foi necessário ir além das operações estatísticas básicas. A Tabela~\ref{tab:funcoesR} resume os principais pacotes e funções efetivamente empregados nos scripts do repositório.
+
+\small
+\begin{longtable}{p{3.2cm}p{4.2cm}p{7.1cm}}
+\caption{Principais recursos adicionais de R utilizados no projeto.}\label{tab:funcoesR}\\
+\toprule
+\rowcolor{azulclaro}
+\textbf{Pacote/área} & \textbf{Função ou recurso} & \textbf{Finalidade no projeto} \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{azulclaro}
+\textbf{Pacote/área} & \textbf{Função ou recurso} & \textbf{Finalidade no projeto} \\
+\midrule
+\endhead
+Base R & \texttt{read.csv()} & Leitura e reconstrução da base original em formato tabular. \\
+Base R & \texttt{as.Date()}, \texttt{as.integer()}, \texttt{as.numeric()}, \texttt{as.factor()} & Conversão explícita de tipos para evitar interpretações incorretas durante os cálculos. \\
+Base R & \texttt{factor()} & Conversão dos códigos de estação e clima em categorias com rótulos interpretáveis. \\
+Base R & \texttt{order()}, \texttt{sort()} & Ordenação cronológica e ordenação numérica para mediana, quartis e séries temporais. \\
+Base R & \texttt{stopifnot()}, \texttt{stop()}, \texttt{file.exists()} & Validação defensiva de quantidade de linhas, índices, existência de arquivos e estrutura esperada. \\
+Base R & \texttt{names()}, \texttt{setdiff()}, \texttt{length()} & Verificação de colunas essenciais e identificação de campos ausentes. \\
+Base R & \texttt{mean()}, \texttt{median()}, \texttt{sd()}, \texttt{IQR()} & Cálculo das medidas descritivas principais. \\
+Base R & \texttt{quantile(type=7)} & Cálculo padronizado dos quartis e definição do limiar de baixa utilização. \\
+Base R & \texttt{table()}, \texttt{max()}, \texttt{names()} & Implementação da função personalizada \texttt{calcula\_moda()} para detectar moda ou conjunto amodal. \\
+Base R & \texttt{ifelse()} & Criação da variável binária \texttt{low\_usage}. \\
+Base R & \texttt{sum()}, \texttt{nrow()}, \texttt{anyNA()} & Contagens, validações e quantificação dos dias de baixa utilização. \\
+Base R & \texttt{cor(method="pearson")} & Cálculo da associação linear entre temperatura e utilização. \\
+Base R & \texttt{lm()} e \texttt{predict()} & Ajuste e projeção de retas de regressão linear descritivas. \\
+Base R & \texttt{aov()} e \texttt{summary()} & ANOVA para comparar médias de utilização entre condições meteorológicas. \\
+Base R & \texttt{which.max()}, \texttt{which.min()} & Localização das datas de utilização máxima e mínima na série temporal. \\
+Base R & \texttt{png()}, \texttt{dev.off()} & Abertura e fechamento de dispositivos gráficos para salvar imagens diretamente em arquivo. \\
+Base R & \texttt{plot()}, \texttt{hist()}, \texttt{boxplot()}, \texttt{points()}, \texttt{text()}, \texttt{abline()} & Construção dos gráficos base utilizados em diferentes etapas. \\
+Base R & \texttt{par()}, \texttt{legend()}, \texttt{grid()}, \texttt{lines()}, \texttt{mtext()} & Personalização de margens, painéis, legendas, grades e elementos visuais dos gráficos. \\
+Base R & \texttt{commandArgs()} & Permitiu ao script final receber arquivo de entrada e pasta de figuras via linha de comando. \\
+Base R & \texttt{dir.create()}, \texttt{file.path()} & Criação e composição segura de caminhos para salvar as figuras geradas. \\
+Base R & \texttt{range()}, \texttt{seq()}, \texttt{sprintf()} & Definição de limites gráficos, grades numéricas e rótulos formatados. \\
+\texttt{readxl} & \texttt{read\_excel()} & Leitura dos arquivos intermediários \texttt{.xlsx} produzidos ao longo das questões. \\
+\texttt{openxlsx} & \texttt{write.xlsx()} & Exportação das bases processadas para planilhas reutilizáveis. \\
+\texttt{dplyr} & \texttt{mutate()}, \texttt{group\_by()}, \texttt{summarise()}, \texttt{n()} & Criação de novas variáveis e resumos por estação e condição meteorológica. \\
+\texttt{dplyr} & \texttt{|>} e \texttt{\%>\%} & Encadeamento das transformações de dados em etapas legíveis. \\
+\texttt{ggplot2} & \texttt{ggplot()}, \texttt{aes()}, \texttt{geom\_boxplot()}, \texttt{geom\_col()} & Construção de visualizações por grupo e gráficos de proporções. \\
+\texttt{ggplot2} & \texttt{geom\_hline()}, \texttt{labs()}, \texttt{theme\_minimal()}, \texttt{guides()} & Inclusão de limite de $Q_1$, rótulos, tema visual e controle de legendas. \\
+\texttt{ggplot2} & \texttt{ggsave()} & Salvamento de gráficos diretamente a partir de scripts executados no terminal/VS Code. \\
+\texttt{scales} & \texttt{percent\_format()} & Formatação do eixo de proporções em percentual. \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\subsection{Função personalizada para a moda}
+
+A necessidade de lidar com distribuições amodais ou multimodais levou à criação de uma função própria. Ela conta as frequências com \texttt{table()}, encontra a maior frequência e devolve todos os valores empatados ou a indicação de conjunto amodal:
+
+\begin{lstlisting}[language=R]
+calcula_moda <- function(v) {
+  frequencias <- table(v)
+  maior_frequencia <- max(frequencias)
+
+  if (maior_frequencia == 1) {
+    return("Amodal")
+  } else {
+    return(as.numeric(names(frequencias)[frequencias == maior_frequencia]))
+  }
+}
+\end{lstlisting}
+
+\subsection{Boas práticas de robustez incorporadas}
+
+Além dos cálculos, os scripts incluíram verificações de integridade e rotinas de execução mais robustas. Entre elas, destacam-se a validação da existência de arquivos antes da leitura, a verificação de colunas obrigatórias, o controle do número de observações com \texttt{stopifnot()}, o uso de \texttt{anyNA()} para detectar ausências, a criação automática de diretórios de saída e a detecção da escala de temperatura antes de convertê-la para graus Celsius.
+
+Esses recursos não alteram a teoria estatística utilizada, mas tornam o código mais seguro, reproduzível e reutilizável.
+
+\section{Fluxo de trabalho e ferramentas de desenvolvimento}
+
+O projeto foi organizado de forma colaborativa e modular. As principais ferramentas foram:
+
+\begin{itemize}[leftmargin=1.2cm]
+\item \textbf{R e RStudio}: execução dos scripts, verificação de objetos, inspeção das bases e produção de gráficos;
+\item \textbf{Visual Studio Code}: edição de scripts, execução via terminal e organização local dos arquivos;
+\item \textbf{LaTeX e Overleaf}: construção dos relatórios parciais e consolidação do relatório acadêmico;
+\item \textbf{Git e GitHub}: controle de versões, histórico de desenvolvimento e integração do trabalho produzido pelos integrantes;
+\item \textbf{Trello}: organização das tarefas e acompanhamento do progresso;
+\item \textbf{Excel/XLSX}: formato intermediário utilizado para transportar os conjuntos processados entre etapas.
+\end{itemize}
+
+A organização por questão permitiu manter scripts, documentos e imagens próximos de suas respectivas análises, reduzindo ambiguidade sobre a origem de cada resultado.
+
+
+\section{Contribuições da equipe}
+
+O trabalho foi desenvolvido de forma colaborativa, com divisão das etapas entre os quatro integrantes e integração contínua pelo GitHub. A síntese abaixo foi organizada a partir das atividades registradas no histórico do repositório e dos arquivos finais produzidos em cada questão. Como houve revisões, reorganizações e integração entre diferentes etapas, as contribuições são apresentadas como principais responsabilidades registradas, sem pressupor exclusividade sobre cada arquivo.
+
+\subsection{Allan Martins Gadelha -- 579087}
+
+As principais contribuições de Allan concentraram-se no processamento da base e em análises estatísticas e sazonais. Entre as atividades registradas, destacam-se:
+
+\begin{itemize}[leftmargin=1.2cm]
+\item desenvolvimento de script em R para processar a base em Excel e incorporar a variável \texttt{total\_user};
+\item apoio à preparação do conjunto de dados utilizado nas etapas posteriores;
+\item desenvolvimento da análise de utilização por estação do ano, incluindo medidas descritivas e visualizações;
+\item produção e inclusão de documentação em LaTeX para partes das análises estatísticas;
+\item participação na consolidação da Questão 2 e em análises adicionais relacionadas à temperatura e ao comportamento do sistema.
+\end{itemize}
+
+\subsection{Clarisse Maria Cabral Montenegro -- 580585}
+
+Clarisse atuou principalmente na construção e validação inicial da amostra, em análises descritivas e na série temporal. Suas principais contribuições registradas foram:
+
+\begin{itemize}[leftmargin=1.2cm]
+\item construção da tabela da amostra específica do grupo e organização da Questão 1;
+\item elaboração e revisão do relatório consolidado da Questão 1;
+\item implementação dos cálculos de medidas de tendência central;
+\item criação da variável \texttt{low\_usage} a partir do primeiro quartil;
+\item desenvolvimento da análise da relação entre temperatura e \texttt{total\_user}, com organização dos arquivos correspondentes;
+\item construção da série temporal da Questão 4, incluindo identificação dos valores máximo e mínimo;
+\item revisão da estrutura e organização final do repositório.
+\end{itemize}
+
+\subsection{Maria Luisa Fernandes de Mendonça -- 581706}
+
+Maria Luisa contribuiu especialmente para a produção de visualizações, organização dos materiais e consolidação dos relatórios das etapas finais. Entre as principais atividades registradas estão:
+
+\begin{itemize}[leftmargin=1.2cm]
+\item desenvolvimento do histograma e do boxplot de \texttt{total\_user} em R e redação da respectiva análise em LaTeX;
+\item organização de pastas, imagens e arquivos intermediários das Questões 2 e 3;
+\item inclusão e organização das imagens utilizadas na análise da relação entre temperatura e utilização;
+\item consolidação do relatório da Questão 3 em LaTeX;
+\item organização e integração de partes da Questão 4;
+\item elaboração da conclusão da Questão 4 e participação na consolidação do relatório correspondente;
+\item preparação e organização do conjunto de imagens finais do projeto.
+\end{itemize}
+
+\subsection{Sara de Sousa Magalhães -- 581189}
+
+Sara teve participação importante na estruturação do repositório, nos cálculos de quartis e nas análises de clima e associação estatística. Suas principais contribuições registradas incluem:
+
+\begin{itemize}[leftmargin=1.2cm]
+\item criação e manutenção inicial do repositório, documentação do projeto e atualização do \texttt{README};
+\item complementação de partes da Questão 1 e integração dos arquivos iniciais;
+\item desenvolvimento do script da Questão 2 para cálculo de quartis, intervalo interquartil e limites de detecção de outliers;
+\item redação da documentação em LaTeX correspondente aos quartis;
+\item desenvolvimento da análise de condições meteorológicas, incluindo scripts, gráficos e interpretação;
+\item desenvolvimento das análises da Questão 4 envolvendo associação entre temperatura, clima e utilização, com scripts R, gráficos e textos em LaTeX;
+\item realização de integrações e merges entre as contribuições dos diferentes integrantes e manutenção da organização do repositório.
+\end{itemize}
+
+\subsection{Trabalho colaborativo}
+
+Além das tarefas individuais, o desenvolvimento exigiu integração frequente entre as partes. Os integrantes compartilharam bases intermediárias, revisaram resultados produzidos por colegas, ajustaram caminhos de arquivos, reorganizaram diretórios e consolidaram documentos em LaTeX. O uso do Git e do GitHub permitiu registrar essas etapas e manter um histórico das alterações realizadas ao longo do projeto.
+
+\section{Síntese dos principais resultados}
+
+\begin{table}[H]
+\centering
+\caption{Síntese dos resultados centrais do projeto.}
+\begin{tabularx}{\textwidth}{p{4.2cm}X}
+\toprule
+\rowcolor{azulclaro}
+\textbf{Resultado} & \textbf{Síntese} \\
+\midrule
+Amostra & 300 dias consecutivos, 07/01/2011 a 02/11/2011. \\
+Demanda média & 3513,21 usuários/dia; mediana 3996. \\
+Quartis & $Q_1=2105{,}5$, $Q_2=3996$, $Q_3=4681$. \\
+Baixa utilização & 75 dias, equivalentes a 25\% da amostra. \\
+Outliers globais & Nenhum pela regra de $1{,}5\times IQR$. \\
+Estação mais associada à baixa utilização & Inverno: 60 de 73 dias em low usage (82,19\%). \\
+Estação com maior média & Verão: 4464,36 usuários/dia. \\
+Clima com maior média & Céu limpo: 3851 usuários/dia. \\
+Chuva fraca & Média de 1562 usuários/dia e 70\% de dias em low usage. \\
+Temperatura x utilização & Correlação de Pearson $r\approx0{,}806$. \\
+Série temporal & Mínimo de 431 em 27/01/2011; máximo de 6043 em 04/07/2011. \\
+ANOVA por clima & $p\approx2{,}13\times10^{-9}$, indicando diferenças entre médias dos grupos meteorológicos. \\
+Correlação por grupo & $r\approx0{,}277$ em low usage e $r\approx0{,}568$ nos demais dias. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Conclusão final do projeto}
+
+O desenvolvimento do Homework 1 permitiu percorrer um fluxo completo de análise estatística: seleção e validação da amostra, verificação manual dos cálculos, caracterização das variáveis, construção de medidas descritivas, identificação de quartis, criação de uma variável derivada de baixa utilização, produção de visualizações e investigação de associações entre fatores ambientais e a demanda do sistema.
+
+Os resultados mostram que a utilização não se mantém constante ao longo do período. A demanda é significativamente menor no inverno e em condições meteorológicas desfavoráveis, enquanto os maiores níveis de uso se concentram em períodos mais quentes. A temperatura apresentou forte associação linear positiva com o total de usuários ($r\approx0{,}806$), mas a análise também demonstrou que uma única variável não explica toda a variabilidade observada. A existência de dias quentes com baixa procura e a forte concentração de \texttt{low\_usage} no inverno evidenciam a importância de interpretar conjuntamente temperatura, estação, clima e evolução temporal.
+
+Do ponto de vista computacional, o trabalho também consolidou habilidades de manipulação de dados e programação em R. Além de funções estatísticas clássicas, foram utilizadas rotinas de validação, manipulação de arquivos, programação de funções próprias, agrupamentos com \texttt{dplyr}, gráficos com \texttt{ggplot2} e gráficos base, exportação de planilhas, dispositivos gráficos e execução por linha de comando. Esse conjunto de recursos tornou a análise mais organizada, reprodutível e adequada a um fluxo colaborativo versionado em GitHub.
+
+Por fim, o projeto reforçou a necessidade de distinguir associação de causalidade. Correlações elevadas e diferenças estatisticamente significativas entre grupos fornecem evidências relevantes sobre o comportamento da demanda, mas devem ser interpretadas no contexto do conjunto de dados e das limitações do desenho observacional.
+
+\end{document}
